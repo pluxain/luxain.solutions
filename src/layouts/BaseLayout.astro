@@ -14,7 +14,9 @@ const { pageTitle } = Astro.props;
     <title>{pageTitle}</title>
   </head>
   <body class="h-screen flex flex-col justify-between">
-    <slot />
+    <main class="lg:w-[50%] mx-auto">
+      <slot />
+    </main>
 
     <footer
       class="px-10 py-6 flex flex-row justify-between items-center bg-blue-50 text-blue-500"
