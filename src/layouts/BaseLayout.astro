@@ -1,4 +1,6 @@
 ---
+import Footer from "../components/Footer.astro";
+
 type Props = {
   pageTitle: string;
 };
@@ -13,20 +15,10 @@ const { pageTitle } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle}</title>
   </head>
-  <body class="h-screen flex flex-col justify-between">
-    <main class="lg:w-[50%] mx-auto">
+  <body class="flex h-screen flex-col justify-between">
+    <main class="mx-auto lg:w-[50%]">
       <slot />
     </main>
-
-    <footer
-      class="px-10 py-6 flex flex-row justify-between items-center bg-blue-50 text-blue-500"
-    >
-      <div>
-        <p>Luxain Solutions, e.U.</p>
-      </div>
-      <div>
-        <p class="text-center">Your missing link.</p>
-      </div>
-    </footer>
+    <Footer />
   </body>
 </html>
