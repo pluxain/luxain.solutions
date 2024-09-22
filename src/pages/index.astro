@@ -5,21 +5,50 @@ const pageTitle = "Luxain Solutions, e.U.";
 ---
 
 <BaseLayout pageTitle={pageTitle}>
-  <section class="text-center">
-    <h1 class="py-10 text-2xl font-bold [font-variant-caps:small-caps]">
+  <section>
+    <h1>
       {pageTitle}
     </h1>
-    <h2 class="text-xl">Pascal Luxain</h2>
+    <h2>Pascal Luxain</h2>
     <h3>-- Multilingual Senior Software Developer</h3>
-    <blockquote class="py-2 text-2xl italic">At your service !</blockquote>
-    <ul class="flex flex-col gap-2 py-4 font-bold">
-      <li class="bg-blue-50 p-4 text-center text-blue-500">
-        Software Development
-      </li>
-      <li class="bg-blue-500 p-4 text-center text-blue-50">
-        Project Management
-      </li>
-      <li class="bg-blue-50 p-4 text-center text-blue-500">Counseling</li>
+    <blockquote>At your service !</blockquote>
+    <ul>
+      <li>Software Development</li>
+      <li>Project Management</li>
+      <li>Counseling</li>
     </ul>
   </section>
 </BaseLayout>
+<style>
+  section {
+    @apply text-center;
+  }
+
+  h1 {
+    @apply py-10 text-2xl font-bold [font-variant-caps:small-caps];
+  }
+
+  h2 {
+    @apply text-xl;
+  }
+
+  blockquote {
+    @apply py-2 text-2xl italic;
+  }
+
+  ul {
+    @apply flex flex-col gap-2 py-4 font-bold;
+  }
+
+  li:nth-child(odd) {
+    @apply bg-blue-50 p-4 text-center text-blue-500;
+  }
+
+  li:nth-child(even) {
+    @apply bg-blue-500 p-4 text-center text-blue-50;
+  }
+
+  li:hover {
+    @apply bg-green-500 text-white;
+  }
+</style>
