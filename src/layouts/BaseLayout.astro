@@ -7,11 +7,12 @@ type Props = {
   robots?: string;
 };
 
-const { description, pageTitle, robots = "index, follow" } = Astro.props;
+const { currentLocale, props } = Astro;
+const { description, pageTitle, robots = "index, follow" } = props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={currentLocale}>
   <head>
     <meta charset="utf-8" />
     <meta name="author" content="Pascal Luxain" />
