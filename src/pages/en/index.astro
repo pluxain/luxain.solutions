@@ -7,50 +7,29 @@ const pageTitle = "Luxain Solutions, e.U.";
 ---
 
 <BaseLayout description={description} pageTitle={pageTitle}>
-  <section>
-    <h1>
+  <section class="text-center">
+    <h1 class="py-10 text-2xl font-bold [font-variant-caps:small-caps]">
       {pageTitle}
     </h1>
-    <h2>Pascal Luxain</h2>
+    <h2 class="text-xl">Pascal Luxain</h2>
     <h3>-- Multilingual Senior full-stack Software Developer</h3>
-    <blockquote>At your service !</blockquote>
-    <ul>
-      <li>Software Development</li>
-      <li>Project Management</li>
-      <li>Counseling</li>
+    <blockquote class="py-2 text-2xl italic">At your service !</blockquote>
+    <ul class="flex flex-col gap-2 py-4 font-bold">
+      <li
+        class="p-4 text-center odd:bg-blue-50 odd:text-blue-500 even:bg-blue-500 even:text-blue-50 hover:bg-green-500 hover:text-white"
+      >
+        Software Development
+      </li>
+      <li
+        class="p-4 text-center odd:bg-blue-50 odd:text-blue-500 even:bg-blue-500 even:text-blue-50 hover:bg-green-500 hover:text-white"
+      >
+        Project Management
+      </li>
+      <li
+        class="p-4 text-center odd:bg-blue-50 odd:text-blue-500 even:bg-blue-500 even:text-blue-50 hover:bg-green-500 hover:text-white"
+      >
+        Counseling
+      </li>
     </ul>
   </section>
 </BaseLayout>
-<style>
-  section {
-    @apply text-center;
-  }
-
-  h1 {
-    @apply py-10 text-2xl font-bold [font-variant-caps:small-caps];
-  }
-
-  h2 {
-    @apply text-xl;
-  }
-
-  blockquote {
-    @apply py-2 text-2xl italic;
-  }
-
-  ul {
-    @apply flex flex-col gap-2 py-4 font-bold;
-  }
-
-  li:nth-child(odd) {
-    @apply bg-blue-50 p-4 text-center text-blue-500;
-  }
-
-  li:nth-child(even) {
-    @apply bg-blue-500 p-4 text-center text-blue-50;
-  }
-
-  li:hover {
-    @apply bg-green-500 text-white;
-  }
-</style>
