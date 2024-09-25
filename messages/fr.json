@@ -1,3 +1,12 @@
 {
-    "$schema": "https://inlang.com/schema/inlang-message-format"
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "aye_captain": "À votre service !",
+  "counseling": "Conseil",
+  "moto": "Votre chaînon manquant.",
+  "project_management": "Gestion de projet",
+  "software_development": "Développement Logiciel",
+  "what_am_i": "Dévoloppeur Sénior full-stack multilingue",
+  "what_can_i_do_for_you": "Je peux vous aider à bâtir vos projets et à atteindre le succès.",
+  "where_do_i_work": "Luxain Solutions, e.U.",
+  "who_am_i": "Pascal Luxain"
 }

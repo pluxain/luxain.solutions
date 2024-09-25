@@ -1,11 +1,15 @@
 ---
+import * as m from "@messages/messages";
 import BaseLayout from "@layouts/BaseLayout.astro";
 
-const description =
-  "Multilingual Senior full-stack Developer at your service! I can help you build your awesome projects and reach success.";
-const pageTitle = "Luxain Solutions, e.U.";
+const description = `${m.what_am_i()} ${m.aye_captain().toLocaleLowerCase()} ${m.what_can_i_do_for_you()}`;
+const pageTitle = m.where_do_i_work();
 
-const services = ["Software Development", "Project Management", "Counseling"];
+const services = [
+  m.software_development(),
+  m.project_management(),
+  m.counseling(),
+];
 ---
 
 <BaseLayout description={description} pageTitle={pageTitle}>
@@ -13,9 +17,9 @@ const services = ["Software Development", "Project Management", "Counseling"];
     <h1 class="py-10 text-2xl font-bold [font-variant-caps:small-caps]">
       {pageTitle}
     </h1>
-    <h2 class="text-xl">Pascal Luxain</h2>
-    <h3>-- Multilingual Senior full-stack Software Developer</h3>
-    <blockquote class="py-2 text-2xl italic">At your service !</blockquote>
+    <h2 class="text-xl">{m.who_am_i()}</h2>
+    <h3>-- {m.what_am_i()}</h3>
+    <blockquote class="py-2 text-2xl italic">{m.aye_captain()}</blockquote>
     <ul class="flex flex-col gap-2 py-4 font-bold">
       {
         services.map((service) => (
