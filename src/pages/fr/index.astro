@@ -4,6 +4,8 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 const description =
   "Développeur Sénior full-stack multilinge à votre service! Je peux vous aider à bâtir vos projets et à atteindre le succès.";
 const pageTitle = "Luxain Solutions, e.U.";
+
+const services = ["Développement Logiciel", "Gestion de projet", "Conseil"];
 ---
 
 <BaseLayout description={description} pageTitle={pageTitle}>
@@ -15,21 +17,13 @@ const pageTitle = "Luxain Solutions, e.U.";
     <h3>-- Dévoloppeur Sénior full-stack multilingue</h3>
     <blockquote class="py-2 text-2xl italic">À votre service !</blockquote>
     <ul class="flex flex-col gap-2 py-4 font-bold">
-      <li
-        class="p-4 text-center odd:bg-blue-50 odd:text-blue-500 even:bg-blue-500 even:text-blue-50 hover:bg-green-500 hover:text-white"
-      >
-        Développement Logiciel
-      </li>
-      <li
-        class="p-4 text-center odd:bg-blue-50 odd:text-blue-500 even:bg-blue-500 even:text-blue-50 hover:bg-green-500 hover:text-white"
-      >
-        Gestion de projet
-      </li>
-      <li
-        class="p-4 text-center odd:bg-blue-50 odd:text-blue-500 even:bg-blue-500 even:text-blue-50 hover:bg-green-500 hover:text-white"
-      >
-        Conseil
-      </li>
+      {
+        services.map((service) => (
+          <li class="p-4 text-center odd:bg-blue-50 odd:text-blue-500 even:bg-blue-500 even:text-blue-50 hover:bg-green-500 hover:text-white">
+            {service}
+          </li>
+        ))
+      }
     </ul>
   </section>
 </BaseLayout>
