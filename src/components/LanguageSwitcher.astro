@@ -1,0 +1,20 @@
+---
+import { availableLanguageTags } from "@messages/runtime";
+import Link from "@components/Link.astro";
+
+const { currentLocale } = Astro;
+---
+
+<ul class="flex flex-row justify-end gap-2">
+  {
+    availableLanguageTags.map((lang) => (
+      <li>
+        {lang === currentLocale ? (
+          <span>[{currentLocale}]</span>
+        ) : (
+          <Link href={`/${lang}/`} hreflang={lang} text={lang} />
+        )}
+      </li>
+    ))
+  }
+</ul>
