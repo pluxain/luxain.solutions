@@ -4,8 +4,7 @@ import * as m from "@messages/messages";
 import { availableLanguageTags } from "@messages/runtime";
 import BaseLayout from "@layouts/BaseLayout.astro";
 
-const description = `${m.who_am_i()}, ${m.what_am_i()} ${m.aye_captain().toLocaleLowerCase()} ${m.what_can_i_do_for_you()}`;
-const pageTitle = m.where_do_i_work();
+const description = `Pascal Luxain, ${m.what_am_i()} ${m.aye_captain().toLocaleLowerCase()} ${m.what_can_i_do_for_you()}`;
 
 const services = [
   m.software_development(),
@@ -20,12 +19,12 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 ---
 
-<BaseLayout description={description} pageTitle={pageTitle}>
+<BaseLayout description={description} pageTitle="Luxain Solutions, e.U.">
   <section class="w-full text-center md:m-auto md:w-96">
     <h1 class="py-10 text-2xl font-bold [font-variant-caps:small-caps]">
-      {pageTitle}
+      Luxain Solutions, e.U.
     </h1>
-    <h2 class="text-xl">{m.who_am_i()}</h2>
+    <h2 class="text-xl">Pascal Luxain</h2>
     <h3>-- {m.what_am_i()}</h3>
     <blockquote class="py-2 text-2xl italic">{m.aye_captain()}</blockquote>
     <ul class="flex w-full flex-col gap-2 py-4 font-bold">
