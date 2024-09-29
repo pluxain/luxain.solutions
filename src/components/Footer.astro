@@ -1,17 +1,46 @@
 ---
 import * as m from "@messages/messages";
+import Link from "@components/Link.astro";
+
+const tools = [
+  { text: "Astro", href: "https://astro.build", hreflang: "en" },
+  { text: "TailwindCSS", href: "https://tailwindcss.com", hreflang: "en" },
+  {
+    text: "Paraglide JS",
+    href: "https://inlang.com/m/gerre34r/library-inlang-paraglideJs",
+    hreflang: "en",
+  },
+];
 ---
 
 <footer
-  class="flex flex-row items-center justify-between bg-blue-50 px-2 py-4 text-sm text-blue-500 md:px-8"
+  class="flex flex-col gap-2 bg-blue-50 px-2 py-4 text-sm text-blue-500 md:px-8"
 >
-  <div>
-    <p>&copy; 2024 {m.where_do_i_work()}</p>
+  <div class="flex flex-row items-center justify-between">
+    <div>
+      <p>&copy; 2024 {m.where_do_i_work()}</p>
+    </div>
+    <div>
+      <p class="text-center">-- {m.moto()}</p>
+    </div>
+    <div class="hidden md:block">
+      <p>ATU81100915</p>
+    </div>
   </div>
-  <div>
-    <p class="text-center">-- {m.moto()}</p>
-  </div>
-  <div class="hidden md:block">
-    <p>ATU81100915</p>
+  <div class="flex flex-row justify-center">
+    {m.made_with()}
+
+    <span class="ml-1 flex flex-row gap-1">
+      {
+        tools.map(({ href, hreflang, text }) => (
+          <Link
+            href={href}
+            hreflang={hreflang}
+            rel="external help nofollow"
+            text={text}
+          />
+        ))
+      }
+    </span>
   </div>
 </footer>
