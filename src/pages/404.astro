@@ -2,13 +2,24 @@
 import Link from "@components/Link.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import * as m from "@messages/messages";
+import {
+  isAvailableLanguageTag,
+  languageTag,
+  setLanguageTag,
+  sourceLanguageTag,
+} from "@messages/runtime";
+
+const { currentLocale } = Astro;
+if (isAvailableLanguageTag(currentLocale)) {
+  setLanguageTag(currentLocale);
+} else {
+  setLanguageTag(sourceLanguageTag);
+}
 
 const description = m.not_found_description();
 const pageNotFound = m.not_found();
 const solutionIntro = m.not_found_solution_intro();
 const here = m.here();
-
-const { currentLocale } = Astro;
 ---
 
 <BaseLayout description={description} pageTitle="404">
@@ -19,7 +30,7 @@ const { currentLocale } = Astro;
     </h2>
     <p>
       {description}! {solutionIntro}
-      <Link href={`/${currentLocale}`}>{here}</Link>.
+      <Link href={`/${languageTag()}`}>{here}</Link>.
     </p>
   </section></BaseLayout
 >
