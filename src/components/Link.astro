@@ -1,12 +1,11 @@
 ---
 type Props = {
   href: string;
-  text: string;
   hreflang?: string;
   rel?: string;
 };
 
-const { href, hreflang, rel, text } = Astro.props;
+const { href, hreflang, rel } = Astro.props;
 ---
 
-<a href={href} hreflang={hreflang} rel={rel} class="underline">{text}</a>
+<a href={href} hreflang={hreflang} rel={rel} class="underline"><slot /></a>

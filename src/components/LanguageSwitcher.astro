@@ -12,7 +12,9 @@ const { currentLocale } = Astro;
         {lang === currentLocale ? (
           <span>[{currentLocale}]</span>
         ) : (
-          <Link href={`/${lang}/`} hreflang={lang} text={lang} />
+          <Link href={`/${lang}/`} hreflang={lang}>
+            {lang}
+          </Link>
         )}
       </li>
     ))

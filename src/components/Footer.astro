@@ -33,12 +33,9 @@ const tools = [
     <span class="ml-1 flex flex-row gap-1">
       {
         tools.map(({ href, hreflang, text }) => (
-          <Link
-            href={href}
-            hreflang={hreflang}
-            rel="external help nofollow"
-            text={text}
-          />
+          <Link href={href} hreflang={hreflang} rel="external help nofollow">
+            {text}
+          </Link>
         ))
       }
     </span>
