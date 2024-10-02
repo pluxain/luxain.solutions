@@ -9,8 +9,9 @@ export default defineConfig({
     defaultLocale: "en",
     locales: ["en", "fr"],
     routing: {
+      fallbackType: "redirect",
       prefixDefaultLocale: true,
-      redirectToDefaultLocale: true,
+      redirectToDefaultLocale: false,
     },
   },
   integrations: [
