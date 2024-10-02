@@ -1,0 +1,10 @@
+---
+import { availableLanguageTags } from "@messages/runtime";
+type Props = {
+  lang: (typeof availableLanguageTags)[number];
+};
+
+const { lang } = Astro.props;
+---
+
+<span>[{lang}]</span>

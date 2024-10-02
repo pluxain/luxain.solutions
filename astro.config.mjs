@@ -5,13 +5,13 @@ import tailwind from "@astrojs/tailwind";
 
 // https://astro.build/config
 export default defineConfig({
-  trailingSlash: "always",
   i18n: {
     defaultLocale: "en",
     locales: ["en", "fr"],
     routing: {
+      fallbackType: "redirect",
       prefixDefaultLocale: true,
-      redirectToDefaultLocale: true,
+      redirectToDefaultLocale: false,
     },
   },
   integrations: [

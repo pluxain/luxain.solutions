@@ -20,8 +20,10 @@ export const getStaticPaths = (async () => {
 ---
 
 <BaseLayout description={description} pageTitle="Luxain Solutions, e.U.">
-  <section class="w-full text-center md:m-auto md:w-96">
-    <h1 class="py-10 text-2xl font-bold [font-variant-caps:small-caps]">
+  <section
+    class="flex w-full grow flex-col justify-center text-center md:m-auto md:w-96"
+  >
+    <h1 class="py-10 text-3xl font-bold [font-variant-caps:small-caps]">
       Luxain Solutions, e.U.
     </h1>
     <h2 class="text-xl">Pascal Luxain</h2>
@@ -30,7 +32,7 @@ export const getStaticPaths = (async () => {
     <ul class="flex w-full flex-col gap-2 py-4 font-bold">
       {
         services.map((service) => (
-          <li class="p-4 text-center odd:bg-blue-50 odd:text-blue-500 even:bg-blue-500 even:text-blue-50 hover:bg-green-500 hover:text-white">
+          <li class="odd:text-primary odd:bg-primary even:bg-primary-flip even:text-primary-flip hover:bg-success hover:text-success p-4 text-center">
             {service}
           </li>
         ))

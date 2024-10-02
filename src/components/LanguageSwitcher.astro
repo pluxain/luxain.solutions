@@ -1,5 +1,6 @@
 ---
 import { availableLanguageTags } from "@messages/runtime";
+import LanguageTag from "@components/LanguageTag.astro";
 import Link from "@components/Link.astro";
 
 const { currentLocale } = Astro;
@@ -10,9 +11,11 @@ const { currentLocale } = Astro;
     availableLanguageTags.map((lang) => (
       <li>
         {lang === currentLocale ? (
-          <span>[{currentLocale}]</span>
+          <LanguageTag lang={lang} />
         ) : (
-          <Link href={`/${lang}/`} hreflang={lang} text={lang} />
+          <Link href={`/${lang}/`} hreflang={lang}>
+            {lang}
+          </Link>
         )}
       </li>
     ))
