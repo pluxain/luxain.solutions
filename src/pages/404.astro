@@ -2,35 +2,33 @@
 import Link from "@components/Link.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import * as m from "@messages/messages";
-import {
-  isAvailableLanguageTag,
-  languageTag,
-  setLanguageTag,
-  sourceLanguageTag,
-} from "@messages/runtime";
-
-const { currentLocale } = Astro;
-if (isAvailableLanguageTag(currentLocale)) {
-  setLanguageTag(currentLocale);
-} else {
-  setLanguageTag(sourceLanguageTag);
-}
-
-const description = m.not_found_description();
-const pageNotFound = m.not_found();
-const solutionIntro = m.not_found_solution_intro();
-const here = m.here();
+import { availableLanguageTags } from "@messages/runtime";
 ---
 
-<BaseLayout description={description} pageTitle="404">
-  <section class="mt-12">
-    <h1 class="text-3xl font-bold">404</h1>
-    <h2 class="text-2xl font-bold [font-variant-caps:small-caps]">
-      {pageNotFound}
-    </h2>
-    <p>
-      {description}! {solutionIntro}
-      <Link href={`/${languageTag()}`}>{here}</Link>.
-    </p>
-  </section></BaseLayout
->
+<BaseLayout description="404 | Not Found" pageTitle="404">
+  <section
+    class="flex w-full grow flex-col justify-center text-center md:m-auto md:w-96"
+  >
+    <h1 class="text-3xl font-semibold text-blue-500">404</h1>
+    {
+      availableLanguageTags.map((languageTag) => (
+        <div class="pt-6">
+          <p class="text-left">[{languageTag}]</p>
+          <h2 class="text-2xl font-bold tracking-tight [font-variant-caps:small-caps]">
+            {m.not_found(undefined, { languageTag })}
+          </h2>
+          <p class="pt-2 text-base leading-7 text-gray-600">
+            {m.not_found_description(undefined, { languageTag })}!
+          </p>
+          <p class="pt-4 text-base leading-7 text-gray-600">
+            {m.not_found_solution_intro(undefined, { languageTag })}
+            <Link href={`/${languageTag}`}>
+              {m.here(undefined, { languageTag })}
+            </Link>
+            .
+          </p>
+        </div>
+      ))
+    }
+  </section>
+</BaseLayout>
