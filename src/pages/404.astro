@@ -10,7 +10,7 @@ import { availableLanguageTags } from "@messages/runtime";
   <section
     class="flex w-full grow flex-col justify-center text-center md:m-auto md:w-96"
   >
-    <h1 class="text-3xl font-semibold text-blue-500">404</h1>
+    <h1 class="text-primary text-3xl font-semibold">404</h1>
     {
       availableLanguageTags.map((languageTag) => (
         <div class="pt-6">
@@ -20,14 +20,16 @@ import { availableLanguageTags } from "@messages/runtime";
           <h2 class="text-2xl font-bold tracking-tight [font-variant-caps:small-caps]">
             {m.not_found(undefined, { languageTag })}
           </h2>
-          <p class="pt-2 text-base leading-7 text-gray-600">
+          <p class="text-accent pt-2 text-base leading-7">
             {m.not_found_description(undefined, { languageTag })}!
           </p>
-          <p class="pt-4 text-base leading-7 text-gray-600">
+          <p class="text-accent pt-4 text-base leading-7">
             {m.not_found_solution_intro(undefined, { languageTag })}
-            <Link href={`/${languageTag}`}>
-              {m.here(undefined, { languageTag })}
-            </Link>
+            <span class="text-base">
+              <Link href={`/${languageTag}`}>
+                {m.here(undefined, { languageTag })}
+              </Link>
+            </span>
             .
           </p>
         </div>
