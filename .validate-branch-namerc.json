@@ -1,0 +1,4 @@
+{
+  "pattern": "^(main){1}$|^f/(\\d+).+$",
+  "errorMsg": "Branch name must start with `f/xxx` where xxx is the issue number"
+}
