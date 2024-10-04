@@ -1,0 +1,26 @@
+---
+import type { GetStaticPaths } from "astro";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import * as m from "@messages/messages";
+import { availableLanguageTags } from "@messages/runtime";
+import { undefined } from "astro:schema";
+
+const pageTitle = m.contact_title();
+const description = m.contact_description();
+
+export const getStaticPaths = (async () => {
+  return availableLanguageTags.map((lang) => ({
+    params: { lang, contact: m.contact_slug(undefined, { languageTag: lang }) },
+  }));
+}) satisfies GetStaticPaths;
+---
+
+<BaseLayout description={description} pageTitle={pageTitle}>
+  <section
+    class="flex w-full grow flex-col justify-center text-center md:m-auto md:w-96"
+  >
+    <h1 class="py-10 text-3xl font-bold [font-variant-caps:small-caps]">
+      {pageTitle}
+    </h1>
+  </section>
+</BaseLayout>
