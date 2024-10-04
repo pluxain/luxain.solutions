@@ -1,20 +1,36 @@
 ---
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
 import * as m from "@messages/messages";
 import Link from "@components/Link.astro";
 
+const designImagesRootPath = "/src/assets/images/design";
 const tools = [
-  { text: "Astro", href: "https://astro.build", hreflang: "en" },
-  { text: "TailwindCSS", href: "https://tailwindcss.com", hreflang: "en" },
+  {
+    text: "Astro",
+    href: "https://astro.build",
+    hreflang: "en",
+  },
+  {
+    text: "TailwindCSS",
+    href: "https://tailwindcss.com",
+    hreflang: "en",
+  },
   {
     text: "Paraglide JS",
     href: "https://inlang.com/m/gerre34r/library-inlang-paraglideJs",
     hreflang: "en",
   },
 ];
+
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  // Note: for some reason cannot use String interpolation/template
+  "/src/assets/images/design/*.svg",
+);
 ---
 
 <footer
-  class="bg-primary text-primary flex flex-col gap-2 px-2 py-4 text-sm md:px-8"
+  class="flex flex-col gap-2 bg-primary px-2 py-4 text-sm text-primary md:px-8"
 >
   <div class="flex flex-row items-center justify-between">
     <div>
@@ -23,21 +39,31 @@ const tools = [
     <div>
       <p class="text-center">-- {m.moto()}</p>
     </div>
-    <div class="hidden md:block">
-      <p>ATU81100915</p>
-    </div>
   </div>
-  <div class="flex flex-row justify-center">
-    {m.made_with()}
-
-    <span class="ml-1 flex flex-row gap-1">
+  <hr />
+  <div class="flex flex-row items-center gap-1">
+    <div class="flex grow flex-row justify-start gap-1 md:justify-center">
+      <div>{m.made_with()}</div>
       {
         tools.map(({ href, hreflang, text }) => (
-          <Link href={href} hreflang={hreflang} rel="external help nofollow">
+          <Link href={href} hreflang={hreflang} rel="external">
             {text}
           </Link>
         ))
       }
-    </span>
+    </div>
+    <div>
+      <Link
+        href="https://github.com/pluxain/luxain.solutions"
+        hreflang="en"
+        rel="external help nofollow"
+      >
+        <Image
+          src={images[`${designImagesRootPath}/github-mark.svg`]()}
+          alt="Github Mark"
+          class="h-6 w-6"
+        />
+      </Link>
+    </div>
   </div>
 </footer>
