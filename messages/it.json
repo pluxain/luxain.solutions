@@ -1,6 +1,9 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "aye_captain": "A vostra disposizione!",
+  "contact_description": "Mandami le tue domande e ti risponderò al più presto.",
+  "contact_slug": "contatti",
+  "contact_title": "Contatta mi",
   "counseling": "Consulenza",
   "here": "qui",
   "made_with": "Confezionato con",
