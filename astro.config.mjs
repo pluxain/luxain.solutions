@@ -21,4 +21,5 @@ export default defineConfig({
     }),
     tailwind(),
   ],
+  output: "hybrid",
 });
