@@ -25,7 +25,7 @@ export const getStaticPaths = (async () => {
       <fieldset class="flex flex-col gap-4">
         <div class="flex flex-col gap-2">
           <label for="from" class="font-bold">
-            {m.contact_form_label_from()}
+            {m.contact_form_label_from()} *
           </label>
           <input
             type="email"
@@ -37,7 +37,7 @@ export const getStaticPaths = (async () => {
         </div>
         <div class="flex flex-col gap-2">
           <label for="subject" class="font-bold">
-            {m.contact_form_label_subject()}
+            {m.contact_form_label_subject()} *
           </label>
           <input
             type="text"
@@ -49,7 +49,7 @@ export const getStaticPaths = (async () => {
         </div>
         <div class="flex flex-col gap-2">
           <label for="message" class="font-bold">
-            {m.contact_form_label_message()}
+            {m.contact_form_label_message()} *
           </label>
           <textarea
             name="message"
@@ -67,6 +67,9 @@ export const getStaticPaths = (async () => {
           {m.contact_form_submit()}
         </button>
       </fieldset>
+      <dl class="flex gap-2">
+        <dt class="font-bold">*:</dt><dd>{m.field_required()}</dd>
+      </dl>
     </form>
   </section>
 </BaseLayout>
