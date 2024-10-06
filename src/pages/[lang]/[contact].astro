@@ -7,6 +7,13 @@ import { availableLanguageTags } from "@messages/runtime";
 const pageTitle = m.contact_title();
 const description = m.contact_description();
 
+//TODO: dry with index
+const services = [
+  m.software_development(),
+  m.project_management(),
+  m.counseling(),
+];
+
 export const getStaticPaths = (async () => {
   return availableLanguageTags.map((lang) => ({
     params: { lang, contact: m.contact_slug(undefined, { languageTag: lang }) },
@@ -14,7 +21,7 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 ---
 
-<BaseLayout description={description} pageTitle={pageTitle}>
+<BaseLayout description={description} pageTitle={pageTitle} robots="nofollow">
   <section class="flex w-full grow flex-col justify-center md:m-auto md:w-96">
     <h1
       class="py-10 text-center text-3xl font-bold [font-variant-caps:small-caps]"
@@ -22,8 +29,8 @@ export const getStaticPaths = (async () => {
       {pageTitle}
     </h1>
     <form novalidate class="flex flex-col gap-4">
-      <fieldset class="flex flex-col gap-4">
-        <div class="flex flex-col gap-2">
+      <fieldset class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
           <label for="from" class="font-bold">
             {m.contact_form_label_from()} *
           </label>
@@ -32,10 +39,18 @@ export const getStaticPaths = (async () => {
             name="from"
             id="from"
             required
-            class="grow border-b pb-1 outline-none focus:border-b-2 focus:border-primary"
+            autofocus
+            autocomplete="off"
+            class="invalid:border-error peer grow border-b-2 pb-1 outline-none valid:border-success"
           />
+          <p
+            role="alert"
+            class="text-error invisible text-sm peer-invalid:visible"
+          >
+            {m.error_email()}
+          </p>
         </div>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
           <label for="subject" class="font-bold">
             {m.contact_form_label_subject()} *
           </label>
@@ -43,11 +58,22 @@ export const getStaticPaths = (async () => {
             type="text"
             name="subject"
             id="subject"
+            list="subjects"
             required
-            class="grow border-b pb-1 outline-none focus:border-b-2 focus:border-primary"
+            autocomplete="off"
+            class="invalid:border-error peer grow border-b-2 pb-1 outline-none valid:border-success"
           />
+          <p
+            role="alert"
+            class="text-error invisible text-sm peer-invalid:visible"
+          >
+            {m.error_subject()}
+          </p>
+          <datalist id="subjects">
+            {services.map((service) => <option>{service}</option>)}
+          </datalist>
         </div>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
           <label for="message" class="font-bold">
             {m.contact_form_label_message()} *
           </label>
@@ -55,14 +81,21 @@ export const getStaticPaths = (async () => {
             name="message"
             id="message"
             required
-            class="h-32 grow resize-y border-b py-1 outline-none focus:border-b-2 focus:border-primary"
+            autocomplete="off"
+            class="invalid:border-error peer h-32 grow resize-y border-b-2 py-1 outline-none valid:border-success"
           ></textarea>
+          <p
+            role="alert"
+            class="text-error invisible text-sm peer-invalid:visible"
+          >
+            {m.error_message()}
+          </p>
         </div>
       </fieldset>
       <fieldset class="flex flex-row justify-end">
         <button
           type="submit"
-          class="grow bg-primary-flip px-4 py-2 text-primary-flip hover:bg-success-flip hover:text-success-flip"
+          class="bg-primary-flip text-primary-flip grow px-4 py-2"
         >
           {m.contact_form_submit()}
         </button>
@@ -84,19 +117,48 @@ export const getStaticPaths = (async () => {
 </script>
 
 <script>
-  import { actions } from "astro:actions";
+  const ids = ["from", "subject", "message"];
+  ids.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+      // Reset User inputs validity on input
+      el.addEventListener("input", (e) => {
+        if (
+          e.target instanceof HTMLInputElement ||
+          e.target instanceof HTMLTextAreaElement
+        ) {
+          if (!e.target.validity.valid) {
+            e.target.setCustomValidity("");
+          }
+        }
+      });
+    }
+  });
+</script>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
 
   const form = document.querySelector("form");
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    const { data, error } = await actions.mail.send(formData);
-    if (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      return;
-    }
-    // eslint-disable-next-line no-console
-    console.log(data);
-  });
+  if (form instanceof HTMLFormElement) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const { error } = await actions.mail.send(formData);
+
+      if (isInputError(error)) {
+        const errors = Object.entries(error.fields);
+        errors.forEach(([id, messages]) => {
+          const input = document.getElementById(id);
+          if (
+            input instanceof HTMLInputElement ||
+            input instanceof HTMLTextAreaElement
+          ) {
+            input.setCustomValidity(messages.join(", "));
+          }
+        });
+        return;
+      }
+    });
+  }
 </script>
