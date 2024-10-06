@@ -14,6 +14,8 @@ const services = [
   m.counseling(),
 ];
 
+const { currentLocale } = Astro;
+
 export const getStaticPaths = (async () => {
   return availableLanguageTags.map((lang) => ({
     params: { lang, contact: m.contact_slug(undefined, { languageTag: lang }) },
@@ -28,7 +30,11 @@ export const getStaticPaths = (async () => {
     >
       {pageTitle}
     </h1>
-    <form novalidate class="flex flex-col gap-4">
+    <form
+      action={`/${currentLocale}/${m.thanks_slug()}`}
+      novalidate
+      class="flex flex-col gap-4"
+    >
       <fieldset class="flex flex-col gap-2">
         <div class="flex flex-col gap-1">
           <label for="from" class="font-bold">
@@ -138,9 +144,18 @@ export const getStaticPaths = (async () => {
 
 <script>
   import { actions, isInputError } from "astro:actions";
+  import { navigate } from "astro:transitions/client";
 
   const form = document.querySelector("form");
   if (form instanceof HTMLFormElement) {
+    const to = form.getAttribute("action");
+
+    if (to === null) {
+      throw new Error(
+        "You must provide a value for the action attribute on the form",
+      );
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const formData = new FormData(form);
@@ -159,6 +174,7 @@ export const getStaticPaths = (async () => {
         });
         return;
       }
+      navigate(to);
     });
   }
 </script>
