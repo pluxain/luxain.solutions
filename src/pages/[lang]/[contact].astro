@@ -70,3 +70,12 @@ export const getStaticPaths = (async () => {
     </form>
   </section>
 </BaseLayout>
+
+<script>
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const subject = urlSearchParams.get("subject");
+  const i = document.getElementById("subject") as HTMLInputElement;
+  if (i && subject) {
+    i.value = subject;
+  }
+</script>
