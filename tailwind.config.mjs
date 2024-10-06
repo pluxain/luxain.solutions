@@ -7,6 +7,10 @@ export default {
         DEFAULT: theme("colors.accent.flip"),
         flip: theme("colors.accent.DEFAULT"),
       },
+      error: {
+        DEFAULT: theme("colors.error.flip"),
+        flip: theme("colors.error.DEFAULT"),
+      },
       primary: {
         DEFAULT: theme("colors.primary.flip"),
         flip: theme("colors.primary.DEFAULT"),
@@ -20,6 +24,10 @@ export default {
       accent: {
         DEFAULT: "#4b5563",
         flip: "#f9fafb",
+      },
+      error: {
+        DEFAULT: "#dc3545",
+        flip: "#f8d7da",
       },
       primary: {
         DEFAULT: "#3b82f6",
