@@ -51,6 +51,7 @@ export const getStaticPaths = (async () => {
           />
           <p
             role="alert"
+            aria-live="polite"
             class="invisible text-sm text-danger peer-invalid:visible"
           >
             {m.error_email()}
@@ -71,6 +72,7 @@ export const getStaticPaths = (async () => {
           />
           <p
             role="alert"
+            aria-live="polite"
             class="invisible text-sm text-danger peer-invalid:visible"
           >
             {m.error_subject()}
@@ -92,6 +94,7 @@ export const getStaticPaths = (async () => {
           ></textarea>
           <p
             role="alert"
+            aria-live="polite"
             class="invisible text-sm text-danger peer-invalid:visible"
           >
             {m.error_message()}
@@ -101,7 +104,8 @@ export const getStaticPaths = (async () => {
       <fieldset class="flex flex-row justify-end">
         <button
           type="submit"
-          class="grow bg-primary px-4 py-2 text-primary-solid"
+          disabled
+          class="grow bg-primary px-4 py-2 text-primary-solid disabled:bg-primary-accent"
         >
           {m.contact_form_submit()}
         </button>
@@ -123,32 +127,14 @@ export const getStaticPaths = (async () => {
 </script>
 
 <script>
-  const ids = ["from", "subject", "message"];
-  ids.forEach((id) => {
-    const el = document.getElementById(id);
-    if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
-      // Reset User inputs validity on input
-      el.addEventListener("input", (e) => {
-        if (
-          e.target instanceof HTMLInputElement ||
-          e.target instanceof HTMLTextAreaElement
-        ) {
-          if (!e.target.validity.valid) {
-            e.target.setCustomValidity("");
-          }
-        }
-      });
-    }
-  });
-</script>
-
-<script>
   import { actions, isInputError } from "astro:actions";
   import { navigate } from "astro:transitions/client";
 
   const form = document.querySelector("form");
+
   if (form instanceof HTMLFormElement) {
     const to = form.getAttribute("action");
+    const submit = form.querySelector('button[type="submit"]');
 
     if (to === null) {
       throw new Error(
@@ -156,8 +142,37 @@ export const getStaticPaths = (async () => {
       );
     }
 
+    const ids = ["from", "subject", "message"];
+    ids.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
+        // Reset User inputs validity on input
+        el.addEventListener("input", (e) => {
+          if (
+            e.target instanceof HTMLInputElement ||
+            e.target instanceof HTMLTextAreaElement
+          ) {
+            if (!e.target.validity.valid) {
+              e.target.setCustomValidity("");
+            }
+
+            // Enable/disable submit button based on form validity
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+            form.checkValidity()
+              ? submit?.removeAttribute("disabled")
+              : submit?.setAttribute("disabled", "");
+          }
+        });
+      }
+    });
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      if (!form.checkValidity()) {
+        return;
+      }
+
       const formData = new FormData(form);
       const { error } = await actions.mail.send(formData);
 
