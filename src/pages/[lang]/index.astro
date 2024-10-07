@@ -35,7 +35,7 @@ const { currentLocale } = Astro;
     <ul class="flex w-full flex-col gap-2 py-4 font-bold">
       {
         services.map((service) => (
-          <li class="text-center odd:bg-primary odd:text-primary even:bg-primary-flip even:text-primary-flip hover:bg-success-flip hover:text-success-flip">
+          <li class="text-center odd:bg-primary-solid odd:text-primary even:bg-primary even:text-primary-solid hover:bg-success-solid hover:text-success">
             <Link
               href={`/${currentLocale}/${m.contact_slug()}?subject=${service.replace(" ", "+")}`}
               hreflang={currentLocale}

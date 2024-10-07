@@ -47,11 +47,11 @@ export const getStaticPaths = (async () => {
             required
             autofocus
             autocomplete="off"
-            class="invalid:border-error peer grow border-b-2 pb-1 outline-none valid:border-success"
+            class="peer grow border-b-2 pb-1 outline-none valid:border-success invalid:border-danger"
           />
           <p
             role="alert"
-            class="text-error invisible text-sm peer-invalid:visible"
+            class="invisible text-sm text-danger peer-invalid:visible"
           >
             {m.error_email()}
           </p>
@@ -67,11 +67,11 @@ export const getStaticPaths = (async () => {
             list="subjects"
             required
             autocomplete="off"
-            class="invalid:border-error peer grow border-b-2 pb-1 outline-none valid:border-success"
+            class="peer grow border-b-2 pb-1 outline-none valid:border-success invalid:border-danger"
           />
           <p
             role="alert"
-            class="text-error invisible text-sm peer-invalid:visible"
+            class="invisible text-sm text-danger peer-invalid:visible"
           >
             {m.error_subject()}
           </p>
@@ -88,11 +88,11 @@ export const getStaticPaths = (async () => {
             id="message"
             required
             autocomplete="off"
-            class="invalid:border-error peer h-32 grow resize-y border-b-2 py-1 outline-none valid:border-success"
+            class="peer h-32 grow resize-y border-b-2 py-1 outline-none valid:border-success invalid:border-danger"
           ></textarea>
           <p
             role="alert"
-            class="text-error invisible text-sm peer-invalid:visible"
+            class="invisible text-sm text-danger peer-invalid:visible"
           >
             {m.error_message()}
           </p>
@@ -101,7 +101,7 @@ export const getStaticPaths = (async () => {
       <fieldset class="flex flex-row justify-end">
         <button
           type="submit"
-          class="bg-primary-flip text-primary-flip grow px-4 py-2"
+          class="grow bg-primary px-4 py-2 text-primary-solid"
         >
           {m.contact_form_submit()}
         </button>
