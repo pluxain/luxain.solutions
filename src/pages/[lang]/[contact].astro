@@ -45,6 +45,7 @@ export const getStaticPaths = (async () => {
             name="from"
             id="from"
             required
+            pattern=".+@.+\\..{2,}"
             autofocus
             autocomplete="off"
             class="peer grow border-b-2 pb-1 outline-none valid:border-success invalid:border-danger"
@@ -67,6 +68,7 @@ export const getStaticPaths = (async () => {
             id="subject"
             list="subjects"
             required
+            minlength="5"
             autocomplete="off"
             class="peer grow border-b-2 pb-1 outline-none valid:border-success invalid:border-danger"
           />
@@ -89,6 +91,7 @@ export const getStaticPaths = (async () => {
             name="message"
             id="message"
             required
+            minlength="50"
             autocomplete="off"
             class="peer h-32 grow resize-y border-b-2 py-1 outline-none valid:border-success invalid:border-danger"
           ></textarea>
