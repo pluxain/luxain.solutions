@@ -178,18 +178,22 @@ export const getStaticPaths = (async () => {
 
       const formData = new FormData(form);
       const { error } = await actions.mail.send(formData);
-
-      if (isInputError(error)) {
-        const errors = Object.entries(error.fields);
-        errors.forEach(([id, messages]) => {
-          const input = document.getElementById(id);
-          if (
-            input instanceof HTMLInputElement ||
-            input instanceof HTMLTextAreaElement
-          ) {
-            input.setCustomValidity(messages.join(", "));
-          }
-        });
+      if (error) {
+        if (isInputError(error)) {
+          const errors = Object.entries(error.fields);
+          errors.forEach(([id, messages]) => {
+            const input = document.getElementById(id);
+            if (
+              input instanceof HTMLInputElement ||
+              input instanceof HTMLTextAreaElement
+            ) {
+              input.setCustomValidity(messages.join(", "));
+            }
+          });
+        }
+        // TODO: display notification to user
+        // eslint-disable-next-line no-console
+        console.error("error", error);
         return;
       }
       navigate(to);
