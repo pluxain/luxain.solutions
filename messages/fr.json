@@ -2,6 +2,8 @@
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "aye_captain": "À votre service !",
   "contact_description": "Adressez-moi vos questions et je vous répondrai dans les meilleurs délais.",
+  "contact_error_oh_nooo": "Oh non! Une erreur est survenue lors de l'envoi de l'email...",
+  "contact_error_try_later": "Merci de réessayer plus tard!",
   "contact_form_label_from": "Votre email",
   "contact_form_label_message": "Message",
   "contact_form_label_subject": "Sujet",

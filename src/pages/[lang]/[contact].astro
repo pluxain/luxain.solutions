@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
+import Notification from "@components/Notification.astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import * as m from "@messages/messages";
 import { availableLanguageTags } from "@messages/runtime";
@@ -35,6 +36,15 @@ export const getStaticPaths = (async () => {
       novalidate
       class="flex flex-col gap-4"
     >
+      <Notification class="contact-error invisible my-0" severity="danger">
+        <p>
+          {m.contact_error_oh_nooo()}
+        </p>
+        <p>
+          {m.contact_error_try_later()}
+        </p>
+      </Notification>
+
       <fieldset class="flex flex-col gap-2">
         <div class="flex flex-col gap-1">
           <label for="from" class="font-bold">
@@ -171,6 +181,14 @@ export const getStaticPaths = (async () => {
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+      const errorNotification = form.querySelector(".contact-error");
+
+      if (
+        errorNotification &&
+        !errorNotification.classList.contains("invisible")
+      ) {
+        errorNotification.classList.add("invisible");
+      }
 
       if (!form.checkValidity()) {
         return;
@@ -190,10 +208,11 @@ export const getStaticPaths = (async () => {
               input.setCustomValidity(messages.join(", "));
             }
           });
+        } else {
+          if (errorNotification) {
+            errorNotification.classList.remove("invisible");
+          }
         }
-        // TODO: display notification to user
-        // eslint-disable-next-line no-console
-        console.error("error", error);
         return;
       }
       navigate(to);
