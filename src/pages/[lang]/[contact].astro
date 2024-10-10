@@ -34,7 +34,7 @@ export const getStaticPaths = (async () => {
     <form
       action={`/${currentLocale}/${m.thanks_slug()}`}
       novalidate
-      class="flex flex-col gap-4"
+      class="contact-form flex flex-col gap-4"
     >
       <Notification class="contact-error invisible my-0" severity="danger">
         <p>
@@ -143,7 +143,7 @@ export const getStaticPaths = (async () => {
   import { actions, isInputError } from "astro:actions";
   import { navigate } from "astro:transitions/client";
 
-  const form = document.querySelector("form");
+  const form = document.querySelector(".contact-form");
 
   if (form instanceof HTMLFormElement) {
     const to = form.getAttribute("action");
@@ -155,27 +155,19 @@ export const getStaticPaths = (async () => {
       );
     }
 
-    const ids = ["from", "subject", "message"];
-    ids.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement) {
-        // Reset User inputs validity on input
-        el.addEventListener("input", (e) => {
-          if (
-            e.target instanceof HTMLInputElement ||
-            e.target instanceof HTMLTextAreaElement
-          ) {
-            if (!e.target.validity.valid) {
-              e.target.setCustomValidity("");
-            }
-
-            // Enable/disable submit button based on form validity
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-            form.checkValidity()
-              ? submit?.removeAttribute("disabled")
-              : submit?.setAttribute("disabled", "");
-          }
-        });
+    form.addEventListener("input", (e) => {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      ) {
+        if (!e.target.validity.valid) {
+          e.target.setCustomValidity("");
+        }
+        // Enable/disable submit button based on form validity
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        form.checkValidity()
+          ? submit?.removeAttribute("disabled")
+          : submit?.setAttribute("disabled", "");
       }
     });
 
@@ -200,7 +192,7 @@ export const getStaticPaths = (async () => {
         if (isInputError(error)) {
           const errors = Object.entries(error.fields);
           errors.forEach(([id, messages]) => {
-            const input = document.getElementById(id);
+            const input = form.querySelector(`#${id}`);
             if (
               input instanceof HTMLInputElement ||
               input instanceof HTMLTextAreaElement
