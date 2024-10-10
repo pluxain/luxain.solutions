@@ -1,14 +1,15 @@
 ---
 type Props = {
   severity: "danger" | "info" | "success" | "warning";
+  class?: string;
 };
 
-const { severity } = Astro.props;
+const { class: className, severity } = Astro.props;
 ---
 
 <div
   class:list={[
-    "notification my-2 border-l-4 text-left",
+    "notification my-2 border-l-4 p-2 text-left",
     // `border-${severity}-accent bg-${severity}-solid text-${severity}`, // does not work as dynamic classes will not be included by Tailwind
     {
       "border-danger-accent bg-danger-solid text-danger": severity === "danger",
@@ -24,9 +25,8 @@ const { severity } = Astro.props;
       "border-warning-accent bg-warning-solid text-warning":
         severity === "warning",
     },
+    className,
   ]}
 >
-  <div class="message p-2">
-    <slot />
-  </div>
+  <slot />
 </div>
