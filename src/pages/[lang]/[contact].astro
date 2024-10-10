@@ -58,7 +58,7 @@ export const getStaticPaths = (async () => {
             pattern=".+@.+\\..{2,}"
             autofocus
             autocomplete="off"
-            class="peer grow border-b-2 pb-1 outline-none valid:border-success invalid:border-danger"
+            class="grow border-b-2 pb-1 outline-none"
           />
           <p
             role="alert"
@@ -80,7 +80,7 @@ export const getStaticPaths = (async () => {
             required
             minlength="5"
             autocomplete="off"
-            class="peer grow border-b-2 pb-1 outline-none valid:border-success invalid:border-danger"
+            class="grow border-b-2 pb-1 outline-none"
           />
           <p
             role="alert"
@@ -103,8 +103,7 @@ export const getStaticPaths = (async () => {
             required
             minlength="50"
             autocomplete="off"
-            class="peer h-32 grow resize-y border-b-2 py-1 outline-none valid:border-success invalid:border-danger"
-          ></textarea>
+            class="h-32 grow resize-y border-b-2 py-1 outline-none"></textarea>
           <p
             role="alert"
             aria-live="polite"
@@ -160,8 +159,17 @@ export const getStaticPaths = (async () => {
         e.target instanceof HTMLInputElement ||
         e.target instanceof HTMLTextAreaElement
       ) {
-        if (!e.target.validity.valid) {
-          e.target.setCustomValidity("");
+        const { target: el } = e;
+        ["peer", "valid:border-success", "invalid:border-danger"].forEach(
+          (cssClass) => {
+            if (!el.classList.contains(cssClass)) {
+              el.classList.add(cssClass);
+            }
+          },
+        );
+
+        if (!el.validity.valid) {
+          el.setCustomValidity("");
         }
         // Enable/disable submit button based on form validity
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
