@@ -34,7 +34,7 @@ export const getStaticPaths = (async () => {
     <form
       action={`/${currentLocale}/${m.thanks_slug()}`}
       novalidate
-      class="contact-form flex flex-col gap-4"
+      class="contact-form mb-6 flex flex-col gap-4"
     >
       <Notification class="contact-error invisible my-0" severity="danger">
         <p>
@@ -109,7 +109,7 @@ export const getStaticPaths = (async () => {
             aria-live="polite"
             class="invisible text-sm text-danger peer-invalid:visible"
           >
-            {m.error_message()}
+            {m.error_message({ minLength: 50 })}
           </p>
         </div>
       </fieldset>
