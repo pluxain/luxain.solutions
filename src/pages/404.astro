@@ -1,6 +1,5 @@
 ---
-import LanguageTag from "@components/LanguageTag.astro";
-import Link from "@components/Link.astro";
+import { LanguageTag, Link } from "@components";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import * as m from "@messages/messages";
 import { availableLanguageTags } from "@messages/runtime";
@@ -10,7 +9,7 @@ import { availableLanguageTags } from "@messages/runtime";
   <section
     class="flex w-full grow flex-col justify-center text-center md:m-auto md:w-96"
   >
-    <h1 class="text-primary text-3xl font-semibold">404</h1>
+    <h1 class="text-3xl font-semibold text-primary">404</h1>
     {
       availableLanguageTags.map((languageTag) => (
         <div class="pt-6">
