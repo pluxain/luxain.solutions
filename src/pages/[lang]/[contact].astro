@@ -144,7 +144,7 @@ export const getStaticPaths = (async () => {
 <script>
   import { actions, isInputError } from "astro:actions";
   import { navigate } from "astro:transitions/client";
-  import { formSubmitEvent } from "@libs/events/FormSubmitEvent";
+  import { formSubmitEvent, formSubmitFailedEvent } from "@libs/events";
 
   const form = document.querySelector(".contact-form");
 
@@ -169,6 +169,12 @@ export const getStaticPaths = (async () => {
       disableSubmit();
       submit.querySelector(".text")?.classList.add("hidden");
       submit.querySelector(".visual-indicator")?.classList.remove("hidden");
+    });
+
+    submit.addEventListener("form.submit.failed", () => {
+      submit.querySelector(".text")?.classList.remove("hidden");
+      submit.querySelector(".visual-indicator")?.classList.add("hidden");
+      enableSubmit();
     });
 
     form.addEventListener("input", (e) => {
@@ -203,6 +209,7 @@ export const getStaticPaths = (async () => {
         !errorNotification.classList.contains("invisible")
       ) {
         errorNotification.classList.add("invisible");
+        submit.dispatchEvent(formSubmitFailedEvent);
       }
 
       if (!form.checkValidity()) {
@@ -229,6 +236,7 @@ export const getStaticPaths = (async () => {
           if (errorNotification) {
             errorNotification.classList.remove("invisible");
           }
+          submit.dispatchEvent(formSubmitFailedEvent);
         }
         return;
       }
