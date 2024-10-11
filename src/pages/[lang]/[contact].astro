@@ -1,0 +1,239 @@
+---
+import type { GetStaticPaths } from "astro";
+import { Notification, VisualIndicator } from "@components";
+import BaseLayout from "@layouts/BaseLayout.astro";
+import * as m from "@messages/messages";
+import { availableLanguageTags } from "@messages/runtime";
+
+const pageTitle = m.contact_title();
+const description = m.contact_description();
+
+//TODO: dry with index
+const services = [
+  m.software_development(),
+  m.project_management(),
+  m.counseling(),
+];
+
+const { currentLocale } = Astro;
+
+export const getStaticPaths = (async () => {
+  return availableLanguageTags.map((lang) => ({
+    params: { lang, contact: m.contact_slug(undefined, { languageTag: lang }) },
+  }));
+}) satisfies GetStaticPaths;
+---
+
+<BaseLayout description={description} pageTitle={pageTitle} robots="nofollow">
+  <section class="flex w-full grow flex-col justify-center md:m-auto md:w-96">
+    <h1
+      class="py-10 text-center text-3xl font-bold [font-variant-caps:small-caps]"
+    >
+      {pageTitle}
+    </h1>
+    <form
+      action={`/${currentLocale}/${m.thanks_slug()}`}
+      novalidate
+      class="contact-form mb-6 flex flex-col gap-4"
+    >
+      <Notification class="contact-error invisible my-0" severity="danger">
+        <p>
+          {m.contact_error_oh_nooo()}
+        </p>
+        <p>
+          {m.contact_error_try_later()}
+        </p>
+      </Notification>
+
+      <fieldset class="flex flex-col gap-2">
+        <div class="flex flex-col gap-1">
+          <label for="from" class="font-bold">
+            {m.contact_form_label_from()} *
+          </label>
+          <input
+            type="email"
+            name="from"
+            id="from"
+            required
+            pattern=".+@.+\\..{2,}"
+            autofocus
+            autocomplete="off"
+            class="grow border-b-2 pb-1 outline-none"
+          />
+          <p
+            role="alert"
+            aria-live="polite"
+            class="invisible text-sm text-danger peer-invalid:visible"
+          >
+            {m.error_email()}
+          </p>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label for="subject" class="font-bold">
+            {m.contact_form_label_subject()} *
+          </label>
+          <input
+            type="text"
+            name="subject"
+            id="subject"
+            list="subjects"
+            required
+            minlength="5"
+            autocomplete="off"
+            class="grow border-b-2 pb-1 outline-none"
+          />
+          <p
+            role="alert"
+            aria-live="polite"
+            class="invisible text-sm text-danger peer-invalid:visible"
+          >
+            {m.error_subject()}
+          </p>
+          <datalist id="subjects">
+            {services.map((service) => <option>{service}</option>)}
+          </datalist>
+        </div>
+        <div class="flex flex-col gap-1">
+          <label for="message" class="font-bold">
+            {m.contact_form_label_message()} *
+          </label>
+          <textarea
+            name="message"
+            id="message"
+            required
+            minlength="50"
+            autocomplete="off"
+            class="h-32 grow resize-y border-b-2 py-1 outline-none"></textarea>
+          <p
+            role="alert"
+            aria-live="polite"
+            class="invisible text-sm text-danger peer-invalid:visible"
+          >
+            {m.error_message({ minLength: 50 })}
+          </p>
+        </div>
+      </fieldset>
+      <fieldset class="flex flex-row justify-end">
+        <button
+          type="submit"
+          disabled
+          class="flex grow items-center justify-center bg-primary px-4 py-2 text-primary-solid disabled:bg-primary-accent"
+        >
+          <span class="text">
+            {m.contact_form_submit()}
+          </span>
+          <VisualIndicator class="visual-indicator hidden h-6 w-6" />
+        </button>
+      </fieldset>
+      <dl class="flex gap-2">
+        <dt class="font-bold">*:</dt><dd>{m.field_required()}</dd>
+      </dl>
+    </form>
+  </section>
+</BaseLayout>
+
+<script>
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const subject = urlSearchParams.get("subject");
+  const i = document.getElementById("subject") as HTMLInputElement;
+  if (i && subject) {
+    i.value = subject;
+  }
+</script>
+
+<script>
+  import { actions, isInputError } from "astro:actions";
+  import { navigate } from "astro:transitions/client";
+  import { formSubmitEvent } from "@libs/events/FormSubmitEvent";
+
+  const form = document.querySelector(".contact-form");
+
+  if (form instanceof HTMLFormElement) {
+    const to = form.getAttribute("action");
+    const submit = form.querySelector('button[type="submit"]');
+
+    if (to === null) {
+      throw new Error(
+        "You must provide a value for the action attribute on the form",
+      );
+    }
+
+    if (submit === null) {
+      throw new Error("You must provide a submit button");
+    }
+
+    const disableSubmit = () => submit.setAttribute("disabled", "");
+    const enableSubmit = () => submit.removeAttribute("disabled");
+
+    submit.addEventListener("form.submit", () => {
+      disableSubmit();
+      submit.querySelector(".text")?.classList.add("hidden");
+      submit.querySelector(".visual-indicator")?.classList.remove("hidden");
+    });
+
+    form.addEventListener("input", (e) => {
+      if (
+        e.target instanceof HTMLInputElement ||
+        e.target instanceof HTMLTextAreaElement
+      ) {
+        const { target: el } = e;
+        ["peer", "valid:border-success", "invalid:border-danger"].forEach(
+          (cssClass) => {
+            if (!el.classList.contains(cssClass)) {
+              el.classList.add(cssClass);
+            }
+          },
+        );
+
+        if (!el.validity.valid) {
+          el.setCustomValidity("");
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        form.checkValidity() ? enableSubmit() : disableSubmit();
+      }
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const errorNotification = form.querySelector(".contact-error");
+
+      if (
+        errorNotification &&
+        !errorNotification.classList.contains("invisible")
+      ) {
+        errorNotification.classList.add("invisible");
+      }
+
+      if (!form.checkValidity()) {
+        return;
+      }
+
+      submit.dispatchEvent(formSubmitEvent);
+
+      const formData = new FormData(form);
+      const { error } = await actions.mail.send(formData);
+      if (error) {
+        if (isInputError(error)) {
+          const errors = Object.entries(error.fields);
+          errors.forEach(([id, messages]) => {
+            const input = form.querySelector(`#${id}`);
+            if (
+              input instanceof HTMLInputElement ||
+              input instanceof HTMLTextAreaElement
+            ) {
+              input.setCustomValidity(messages.join(", "));
+            }
+          });
+        } else {
+          if (errorNotification) {
+            errorNotification.classList.remove("invisible");
+          }
+        }
+        return;
+      }
+
+      navigate(to);
+    });
+  }
+</script>

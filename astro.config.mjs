@@ -2,9 +2,13 @@
 import { defineConfig } from "astro/config";
 import paraglide from "@inlang/paraglide-astro";
 import tailwind from "@astrojs/tailwind";
+import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
+  adapter: node({
+    mode: "standalone",
+  }),
   i18n: {
     defaultLocale: "en",
     locales: ["en", "fr", "it"],
@@ -21,4 +25,5 @@ export default defineConfig({
     }),
     tailwind(),
   ],
+  output: "hybrid",
 });

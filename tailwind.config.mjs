@@ -1,33 +1,33 @@
 /** @type {import('tailwindcss').Config} */
+import colors from "tailwindcss/colors";
 export default {
   content: ["./src/**/*.{astro,html,ts,tsx}"],
   theme: {
-    backgroundColor: ({ theme }) => ({
-      accent: {
-        DEFAULT: theme("colors.accent.flip"),
-        flip: theme("colors.accent.DEFAULT"),
-      },
-      primary: {
-        DEFAULT: theme("colors.primary.flip"),
-        flip: theme("colors.primary.DEFAULT"),
-      },
-      success: {
-        DEFAULT: theme("colors.success.flip"),
-        flip: theme("colors.success.DEFAULT"),
-      },
-    }),
     colors: {
-      accent: {
-        DEFAULT: "#4b5563",
-        flip: "#f9fafb",
+      danger: {
+        accent: colors.red[300],
+        DEFAULT: colors.red[500],
+        solid: colors.red[50],
+      },
+      info: {
+        accent: colors.cyan[300],
+        DEFAULT: colors.cyan[500],
+        solid: colors.cyan[50],
       },
       primary: {
-        DEFAULT: "#3b82f6",
-        flip: "#eff6ff",
+        accent: colors.blue[300],
+        DEFAULT: colors.blue[500],
+        solid: colors.blue[50],
       },
       success: {
-        DEFAULT: "#22c55e",
-        flip: "#f0fdf4",
+        accent: colors.green[300],
+        DEFAULT: colors.green[500],
+        solid: colors.green[50],
+      },
+      warning: {
+        accent: colors.orange[300],
+        DEFAULT: colors.orange[500],
+        solid: colors.orange[50],
       },
     },
     extend: {},
