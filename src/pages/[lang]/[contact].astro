@@ -154,6 +154,13 @@ export const getStaticPaths = (async () => {
       );
     }
 
+    if (submit === null) {
+      throw new Error("You must provide a submit button");
+    }
+
+    const disableSubmit = () => submit.setAttribute("disabled", "");
+    const enableSubmit = () => submit.removeAttribute("disabled");
+
     form.addEventListener("input", (e) => {
       if (
         e.target instanceof HTMLInputElement ||
@@ -171,11 +178,9 @@ export const getStaticPaths = (async () => {
         if (!el.validity.valid) {
           el.setCustomValidity("");
         }
-        // Enable/disable submit button based on form validity
+
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        form.checkValidity()
-          ? submit?.removeAttribute("disabled")
-          : submit?.setAttribute("disabled", "");
+        form.checkValidity() ? enableSubmit() : disableSubmit();
       }
     });
 
@@ -193,6 +198,8 @@ export const getStaticPaths = (async () => {
       if (!form.checkValidity()) {
         return;
       }
+
+      disableSubmit();
 
       const formData = new FormData(form);
       const { error } = await actions.mail.send(formData);
@@ -215,6 +222,7 @@ export const getStaticPaths = (async () => {
         }
         return;
       }
+
       navigate(to);
     });
   }
