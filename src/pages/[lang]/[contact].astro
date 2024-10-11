@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { Notification } from "@components";
+import { Notification, VisualIndicator } from "@components";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import * as m from "@messages/messages";
 import { availableLanguageTags } from "@messages/runtime";
@@ -117,9 +117,12 @@ export const getStaticPaths = (async () => {
         <button
           type="submit"
           disabled
-          class="grow bg-primary px-4 py-2 text-primary-solid disabled:bg-primary-accent"
+          class="flex grow items-center justify-center bg-primary px-4 py-2 text-primary-solid disabled:bg-primary-accent"
         >
-          {m.contact_form_submit()}
+          <span class="text">
+            {m.contact_form_submit()}
+          </span>
+          <VisualIndicator class="visual-indicator hidden h-6 w-6" />
         </button>
       </fieldset>
       <dl class="flex gap-2">
@@ -141,6 +144,7 @@ export const getStaticPaths = (async () => {
 <script>
   import { actions, isInputError } from "astro:actions";
   import { navigate } from "astro:transitions/client";
+  import { formSubmitEvent } from "@libs/events/FormSubmitEvent";
 
   const form = document.querySelector(".contact-form");
 
@@ -160,6 +164,12 @@ export const getStaticPaths = (async () => {
 
     const disableSubmit = () => submit.setAttribute("disabled", "");
     const enableSubmit = () => submit.removeAttribute("disabled");
+
+    submit.addEventListener("form.submit", () => {
+      disableSubmit();
+      submit.querySelector(".text")?.classList.add("hidden");
+      submit.querySelector(".visual-indicator")?.classList.remove("hidden");
+    });
 
     form.addEventListener("input", (e) => {
       if (
@@ -199,7 +209,7 @@ export const getStaticPaths = (async () => {
         return;
       }
 
-      disableSubmit();
+      submit.dispatchEvent(formSubmitEvent);
 
       const formData = new FormData(form);
       const { error } = await actions.mail.send(formData);
