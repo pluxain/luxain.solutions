@@ -26,4 +26,5 @@ export default defineConfig({
     tailwind(),
   ],
   output: "hybrid",
+  site: "https://luxain.solutions",
 });
