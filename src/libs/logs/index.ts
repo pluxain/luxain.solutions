@@ -1,5 +1,7 @@
 import pino from "pino";
 
+const { LOG_LEVEL = "trace" } = import.meta.env;
+
 const targets = [];
 
 if (process.env.NODE_ENV === "development") {
@@ -29,7 +31,7 @@ const transport = pino.transport({
 
 const logger = pino(
   {
-    level: "trace",
+    level: LOG_LEVEL,
     formatters: {
       bindings(bindings) {
         // We do not want the host, but the node version
