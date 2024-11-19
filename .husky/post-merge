@@ -29,4 +29,7 @@ if [ "$branch" = "main" ]; then
   # restore the server logs
   mv ./backup/server/logs/*.log ./dist/server/logs/
 
+  # generate the node application entry point
+  echo "import("./entry.mjs");" > ./dist/server/entry.cjs
+
 fi
