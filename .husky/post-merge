@@ -9,9 +9,13 @@ if [ "$branch" = "main" ]; then
 
   # create folder structure for backup
   mkdir -p ./backup/client
+  mkdir -p ./backup/server/logs
 
   # save .htaccess for NodeJs application
   mv ./dist/client/.htaccess ./backup/client/
+
+  #  save the server logs
+  mv ./dist/server/logs/*.log ./backup/server/logs/
 
   # build the app
   npm run build
@@ -21,5 +25,8 @@ if [ "$branch" = "main" ]; then
 
   # restore .htaccess for NodeJs application
   mv ./backup/client/.htaccess ./dist/client/
+
+  # restore the server logs
+  mv ./backup/server/logs/*.log ./dist/server/logs/
 
 fi
