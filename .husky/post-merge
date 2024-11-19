@@ -12,25 +12,37 @@ if [ "$branch" = "main" ]; then
   mkdir -p ./backup/server/logs
 
   # save .htaccess for NodeJs application
-  mv ./dist/client/.htaccess ./backup/client/
+  if [ -e ./dist/client/.htaccess ]; then
+    mv ./dist/client/.htaccess ./backup/client/
+  fi
 
   #  save the server logs
-  mv ./dist/server/logs/*.log ./backup/server/logs/
+  if [ -d ./dist/server/logs ]; then
+    mv ./dist/server/logs/*.log ./backup/server/logs/
+  fi
 
   # build the app
   npm run build
 
   # add the .shtml of 404
-  cp ./dist/client/404.html ./dist/client/404.shtml
+   if [ -e ./dist/client/404.html ]; then
+    cp ./dist/client/404.html ./dist/client/404.shtml
+  fi
 
   # restore .htaccess for NodeJs application
-  mv ./backup/client/.htaccess ./dist/client/
+  if [ -e ./backup/client/.htaccess ]; then
+    mv ./backup/client/.htaccess ./dist/client/
+  fi
 
   # restore the server logs
   mkdir -p ./dist/server/logs
-  mv ./backup/server/logs/*.log ./dist/server/logs/
+  if [ -d ./backup/server/logs ]; then
+    mv ./backup/server/logs/*.log ./dist/server/logs/
+  fi
 
   # generate the node application entry point
-  echo "import(\"./entry.mjs\");" > ./dist/server/entry.cjs
+  if [ -d ./dist/server ]; then
+    echo "import(\"./entry.mjs\");" > ./dist/server/entry.cjs
+  fi
 
 fi
