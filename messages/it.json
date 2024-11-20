@@ -1,7 +1,7 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "aye_captain": "A vostra disposizione!",
-  "contact_description": "Mandami le tue domande e ti risponderò al più presto.",
+  "contact_description": "Mandami le tue domande e ti risponderò al più presto",
   "contact_error_oh_nooo": "Oh no! Si è verificato un errore durante l'invio dell'e-mail...",
   "contact_error_try_later": "Ti prego di riprovare più tardi, grazie!",
   "contact_form_label_from": "La tua e-mail",
@@ -13,7 +13,7 @@
   "counseling": "Consulenza",
   "error_email": "Inserire un indirizzo e-mail valido.",
   "error_message": "Inserire un messaggio valido (almeno {minLength} caratteri).",
-  "error_subject": "Inserire un oggetto valido.",
+  "error_subject": "Inserire un oggetto.",
   "field_required": "campo obbligatorio",
   "here": "qui",
   "made_with": "Confezionato con",
@@ -27,5 +27,5 @@
   "thanks_slug": "grazie",
   "thanks_title": "Grazie!",
   "what_am_i": "Sviluppatore software senior full-stack multilingue",
-  "what_can_i_do_for_you": "Posso aiutarvi a costruire i vostri fantastici progetti e a raggiungere il successo."
+  "what_can_i_do_for_you": "Ti aiuto a costruire i vostri fantastici progetti e a raggiungere il successo."
 }
