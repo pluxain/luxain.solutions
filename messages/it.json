@@ -13,7 +13,7 @@
   "counseling": "Consulenza",
   "error_email": "Inserire un indirizzo e-mail valido.",
   "error_message": "Inserire un messaggio valido (almeno {minLength} caratteri).",
-  "error_subject": "Inserire un oggetto valido.",
+  "error_subject": "Inserire un oggetto.",
   "field_required": "campo obbligatorio",
   "here": "qui",
   "made_with": "Confezionato con",

@@ -13,7 +13,7 @@
   "counseling": "Counseling",
   "error_email": "Please provide a valid email address.",
   "error_message": "Please provide a valid message ({minLength} characters minimum).",
-  "error_subject": "Please provide a valid subject.",
+  "error_subject": "Please provide a subject.",
   "field_required": "field required",
   "here": "here",
   "made_with": "Crafted with",
