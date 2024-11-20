@@ -1,7 +1,7 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "aye_captain": "À votre service !",
-  "contact_description": "Adressez-moi vos questions et je vous répondrai dans les meilleurs délais.",
+  "contact_description": "Adressez-moi vos questions et je vous répondrai dans les meilleurs délais",
   "contact_error_oh_nooo": "Oh non! Une erreur est survenue lors de l'envoi de l'email...",
   "contact_error_try_later": "Merci de réessayer plus tard!",
   "contact_form_label_from": "Votre email",
@@ -27,5 +27,5 @@
   "thanks_slug": "merci",
   "thanks_title": "Merci !",
   "what_am_i": "Dévoloppeur Sénior full-stack multilingue",
-  "what_can_i_do_for_you": "Je peux vous aider à bâtir vos projets et à atteindre le succès."
+  "what_can_i_do_for_you": "Je vous aide à bâtir vos projets et à atteindre le succès."
 }
