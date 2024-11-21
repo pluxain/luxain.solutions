@@ -99,7 +99,7 @@ export const getStaticPaths = (async () => {
             <span class="font-bold">
               {m.contact_form_label_message()} *
             </span>
-            <span id="message-count">0</span>
+            <span id="message-count" class="invisible">0</span>
           </label>
           <textarea
             name="message"
@@ -175,8 +175,17 @@ export const getStaticPaths = (async () => {
         const counter = document.getElementById(
           `${textarea.getAttribute("id")}-count`,
         );
+        const count = textarea.textLength;
         if (counter) {
-          counter.innerText = textarea.textLength.toString();
+          ["invisible"].forEach((cssClass) => {
+            if (counter.classList.contains(cssClass)) {
+              counter.classList.remove(cssClass);
+            } else if (count == 0) {
+              counter.classList.add(cssClass);
+            }
+          });
+
+          counter.innerText = count.toString();
         }
       });
     });
