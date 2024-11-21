@@ -95,8 +95,11 @@ export const getStaticPaths = (async () => {
           </datalist>
         </div>
         <div class="flex flex-col gap-1">
-          <label for="message" class="font-bold">
-            {m.contact_form_label_message()} *
+          <label for="message" class="flex flex-row justify-between">
+            <span class="font-bold">
+              {m.contact_form_label_message()} *
+            </span>
+            <span id="message-count">0</span>
           </label>
           <textarea
             name="message"
