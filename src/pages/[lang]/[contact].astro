@@ -184,6 +184,7 @@ export const getStaticPaths = (async () => {
         e.target instanceof HTMLTextAreaElement
       ) {
         const { target: el } = e;
+        // Note: we activate the error display mechanism on element only after at least one input.
         ["peer", "valid:border-success", "invalid:border-danger"].forEach(
           (cssClass) => {
             if (!el.classList.contains(cssClass)) {
@@ -196,8 +197,7 @@ export const getStaticPaths = (async () => {
           el.setCustomValidity("");
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-        form.checkValidity() ? enableSubmit() : disableSubmit();
+        return form.checkValidity() ? enableSubmit() : disableSubmit();
       }
     });
 
