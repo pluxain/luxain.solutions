@@ -99,8 +99,8 @@ export const getStaticPaths = (async () => {
             <span class="font-bold">
               {m.contact_form_label_message()} *
             </span>
-            <span id="message-count" class="invisible">0</span>
           </label>
+          <hr class="message-count invisible w-[50%] border-2 border-danger" />
           <textarea
             name="message"
             id="message"
@@ -170,24 +170,27 @@ export const getStaticPaths = (async () => {
     const enableSubmit = () => submit.removeAttribute("disabled");
     const textareas = Array.from(document.getElementsByTagName("textarea"));
     textareas.forEach((textarea) => {
-      textarea.addEventListener("input", () => {
-        // Note we will update the count of characters for textareas using a convention in naming
-        const counter = document.getElementById(
-          `${textarea.getAttribute("id")}-count`,
-        );
-        const count = textarea.textLength;
-        if (counter) {
+      // Note we will update the count of characters for textareas using a convention in naming
+      // Note: by convention there will be only one
+      const counter = document.querySelector<HTMLElement>(
+        `.${textarea.getAttribute("id")}-count`,
+      );
+
+      if (counter) {
+        textarea.addEventListener("input", () => {
+          const count = textarea.textLength;
           ["invisible"].forEach((cssClass) => {
             if (counter.classList.contains(cssClass)) {
               counter.classList.remove(cssClass);
             } else if (count == 0) {
               counter.classList.add(cssClass);
             }
-          });
 
-          counter.innerText = count.toString();
-        }
-      });
+            counter.innerText = count.toString();
+            counter.setAttribute("title", count.toString());
+          });
+        });
+      }
     });
 
     submit.addEventListener("form.submit", () => {
