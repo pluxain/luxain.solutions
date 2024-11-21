@@ -168,6 +168,18 @@ export const getStaticPaths = (async () => {
 
     const disableSubmit = () => submit.setAttribute("disabled", "");
     const enableSubmit = () => submit.removeAttribute("disabled");
+    const textareas = Array.from(document.getElementsByTagName("textarea"));
+    textareas.forEach((textarea) => {
+      textarea.addEventListener("input", () => {
+        // Note we will update the count of characters for textareas using a convention in naming
+        const counter = document.getElementById(
+          `${textarea.getAttribute("id")}-count`,
+        );
+        if (counter) {
+          counter.innerText = textarea.textLength.toString();
+        }
+      });
+    });
 
     submit.addEventListener("form.submit", () => {
       disableSubmit();
