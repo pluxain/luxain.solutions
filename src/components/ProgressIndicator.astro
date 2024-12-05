@@ -24,6 +24,8 @@ const { class: className, trackedId, thickness = "base" } = Astro.props;
 </astro-progress-indicator>
 
 <script>
+  import { HTMLComponentElementNotFoundError } from "@libs/errors/HTMLComponentElementNotFoundError";
+
   class AstroProgressIndicator extends HTMLElement {
     connectedCallback() {
       const { trackedId } = this.dataset;
@@ -34,7 +36,16 @@ const { class: className, trackedId, thickness = "base" } = Astro.props;
 
       const tracked = document.getElementById(trackedId);
       if (tracked instanceof HTMLTextAreaElement) {
-        const indicator = this.querySelector(`#${trackedId}-count`)!;
+        const indicator = this.querySelector<HTMLHRElement>(
+          `#${trackedId}-count`,
+        );
+
+        if (indicator === null) {
+          throw new HTMLComponentElementNotFoundError(
+            `HTMLElement with id ${trackedId}-count is required`,
+          );
+        }
+
         tracked.addEventListener("input", () => {
           const count = tracked.textLength;
           ["invisible"].forEach((cssClass) => {
