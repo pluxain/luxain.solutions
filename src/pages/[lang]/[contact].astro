@@ -100,7 +100,7 @@ export const getStaticPaths = (async () => {
               {m.contact_form_label_message()} *
             </span>
           </label>
-          <ProgressIndicator trackedId="message" />
+          <ProgressIndicator trackedId="message" max={50} />
           <textarea
             name="message"
             id="message"

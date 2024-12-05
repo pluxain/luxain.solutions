@@ -3,18 +3,19 @@ import type { Size } from "@types";
 
 type Props = {
   trackedId: string;
+  max: number;
   class?: string;
   thickness?: Size;
 };
 
-const { class: className, trackedId, thickness = "base" } = Astro.props;
+const { class: className, max, trackedId, thickness = "base" } = Astro.props;
 ---
 
-<astro-progress-indicator data-tracked-id={trackedId}>
+<astro-progress-indicator data-tracked-id={trackedId} data-max={max}>
   <hr
     id={`${trackedId}-count`}
     class:list={[
-      `invisible w-[50%] border-danger`,
+      `invisible border-danger`,
       { "border-4": thickness === "lg" },
       { "border-2": thickness === "base" },
       { border: thickness === "sm" },
@@ -25,16 +26,24 @@ const { class: className, trackedId, thickness = "base" } = Astro.props;
 
 <script>
   import { HTMLComponentElementNotFoundError } from "@libs/errors/HTMLComponentElementNotFoundError";
+  import { HTMLComponentPropError } from "@libs/errors/HTMLComponentPropError";
 
   class AstroProgressIndicator extends HTMLElement {
     connectedCallback() {
-      const { trackedId } = this.dataset;
+      const { max, trackedId } = this.dataset;
 
-      if (typeof trackedId === "undefined") {
-        throw new ReferenceError("trackedId must be set");
-      }
+      // Prop validation
+      // TODO: make a type guard for TS
+      [
+        ["max", max],
+        ["trackedId", trackedId],
+      ].forEach(([name, prop]) => {
+        if (typeof prop === "undefined") {
+          throw new HTMLComponentPropError(`${name} must be set`);
+        }
+      });
 
-      const tracked = document.getElementById(trackedId);
+      const tracked = document.getElementById(trackedId!);
       if (tracked instanceof HTMLTextAreaElement) {
         const indicator = this.querySelector<HTMLHRElement>(
           `#${trackedId}-count`,
@@ -55,6 +64,10 @@ const { class: className, trackedId, thickness = "base" } = Astro.props;
               indicator.classList.add(cssClass);
             }
             this.setAttribute("title", count.toString());
+            indicator.style.setProperty(
+              "width",
+              `${Math.min((count * 100) / +max!, 100)}%`,
+            );
           });
         });
       }
