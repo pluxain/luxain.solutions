@@ -4,9 +4,12 @@
     "baseUrl": ".",
     "paths": {
       "@components": ["src/components/"],
+      "@components/*": ["src/components/*"],
       "@layouts/*": ["src/layouts/*"],
       "@libs/*": ["src/libs/*"],
-      "@messages/*": ["src/paraglide/*"]
+      "@messages/*": ["src/paraglide/*"],
+      "@types": ["src/types/"],
+      "@types/*": ["src/types/*"]
     }
   }
 }
