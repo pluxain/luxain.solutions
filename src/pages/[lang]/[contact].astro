@@ -100,7 +100,7 @@ export const getStaticPaths = (async () => {
               {m.contact_form_label_message()} *
             </span>
           </label>
-          <ProgressIndicator id="message-count" />
+          <ProgressIndicator trackedId="message" />
           <textarea
             name="message"
             id="message"
@@ -168,30 +168,6 @@ export const getStaticPaths = (async () => {
 
     const disableSubmit = () => submit.setAttribute("disabled", "");
     const enableSubmit = () => submit.removeAttribute("disabled");
-    const textareas = Array.from(document.getElementsByTagName("textarea"));
-    textareas.forEach((textarea) => {
-      // Note we will update the count of characters for textareas using a convention in naming
-      // Note: by convention there will be only one
-      const counter = document.querySelector<HTMLElement>(
-        `.${textarea.getAttribute("id")}-count`,
-      );
-
-      if (counter) {
-        textarea.addEventListener("input", () => {
-          const count = textarea.textLength;
-          ["invisible"].forEach((cssClass) => {
-            if (counter.classList.contains(cssClass)) {
-              counter.classList.remove(cssClass);
-            } else if (count == 0) {
-              counter.classList.add(cssClass);
-            }
-
-            counter.innerText = count.toString();
-            counter.setAttribute("title", count.toString());
-          });
-        });
-      }
-    });
 
     submit.addEventListener("form.submit", () => {
       disableSubmit();

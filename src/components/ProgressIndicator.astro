@@ -2,21 +2,52 @@
 import type { Size } from "@types";
 
 type Props = {
-  id: string;
+  trackedId: string;
   class?: string;
   thickness?: Size;
 };
 
-const { class: className, id, thickness = "base" } = Astro.props;
+const { class: className, trackedId, thickness = "base" } = Astro.props;
 ---
 
-<hr
-  class:list={[
-    `invisible w-[50%] border-danger`,
-    id,
-    { "border-4": thickness === "lg" },
-    { "border-2": thickness === "base" },
-    { border: thickness === "sm" },
-    className,
-  ]}
-/>
+<astro-progress-indicator data-tracked-id={trackedId}>
+  <hr
+    id={`${trackedId}-count`}
+    class:list={[
+      `invisible w-[50%] border-danger`,
+      { "border-4": thickness === "lg" },
+      { "border-2": thickness === "base" },
+      { border: thickness === "sm" },
+      className,
+    ]}
+  />
+</astro-progress-indicator>
+
+<script>
+  class AstroProgressIndicator extends HTMLElement {
+    connectedCallback() {
+      const { trackedId } = this.dataset;
+
+      if (typeof trackedId === "undefined") {
+        throw new ReferenceError("trackedId must be set");
+      }
+
+      const tracked = document.getElementById(trackedId);
+      if (tracked instanceof HTMLTextAreaElement) {
+        const indicator = this.querySelector(`#${trackedId}-count`)!;
+        tracked.addEventListener("input", () => {
+          const count = tracked.textLength;
+          ["invisible"].forEach((cssClass) => {
+            if (indicator.classList.contains(cssClass)) {
+              indicator.classList.remove(cssClass);
+            } else if (count == 0) {
+              indicator.classList.add(cssClass);
+            }
+            this.setAttribute("title", count.toString());
+          });
+        });
+      }
+    }
+  }
+  customElements.define("astro-progress-indicator", AstroProgressIndicator);
+</script>
