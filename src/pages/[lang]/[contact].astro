@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { Notification, VisualIndicator } from "@components";
+import { Notification, ProgressIndicator, VisualIndicator } from "@components";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import * as m from "@messages/messages";
 import { availableLanguageTags } from "@messages/runtime";
@@ -100,7 +100,7 @@ export const getStaticPaths = (async () => {
               {m.contact_form_label_message()} *
             </span>
           </label>
-          <hr class="message-count invisible w-[50%] border-2 border-danger" />
+          <ProgressIndicator id="message-count" />
           <textarea
             name="message"
             id="message"

@@ -1,0 +1,22 @@
+---
+import type { Size } from "@types";
+
+type Props = {
+  id: string;
+  class?: string;
+  thickness?: Size;
+};
+
+const { class: className, id, thickness = "base" } = Astro.props;
+---
+
+<hr
+  class:list={[
+    `invisible w-[50%] border-danger`,
+    id,
+    { "border-4": thickness === "lg" },
+    { "border-2": thickness === "base" },
+    { border: thickness === "sm" },
+    className,
+  ]}
+/>
