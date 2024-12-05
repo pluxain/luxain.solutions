@@ -1,6 +1,6 @@
 import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
-import { ConfigurationError } from "@libs/errors/ConfigurationError";
+import { ConfigurationError } from "@libs/errors";
 import { sendMail } from "@libs/mail";
 import { logger } from "@libs/logs";
 
