@@ -1,52 +1,58 @@
 #!/usr/bin/env sh
 
 branch="$(git rev-parse --abbrev-ref HEAD)"
+dist_client=./dist/client
+dist_server=./dist/server
+backup_client=./backup/client
+backup_server=./backup/server
+dist_server_logs="$dist_server/logs"
+backup_server_logs="$backup_server/logs"
 
-if [ "$branch" = "main" ]; then
+if [ $branch = "main" ]; then
   echo "$branch branch executing install and build"
   # TODO: Find a way to only run when package-lock.json is modified
   npm install
 
   # create folder structure for backup
-  mkdir -p ./backup/client
-  mkdir -p ./backup/server/logs
+  mkdir -p $backup_client
+  mkdir -p $backup_server_logs
 
   # save .htaccess for NodeJs application
-  if [ -e ./dist/client/.htaccess ]; then
-    mv ./dist/client/.htaccess ./backup/client/
+  if [ -e "$dist_client/.htaccess" ]; then
+    mv "$dist_client/.htaccess" "$backup_client/"
   fi
 
   #  save the server logs
-  if [ -d ./dist/server/logs ]; then
-    if compgen -G "./dist/server/logs/*.log" > /dev/null; then
-      mv ./dist/server/logs/*.log ./backup/server/logs/
+  if [ -d $dist_server_logs ]; then
+    if compgen -G "$dist_server_logs/*.log" > /dev/null; then
+      mv "$dist_server_logs/*.log" "$backup_server_logs/"
     fi
   fi
 
-  # build the app
+  # build the app will erase/overwrite the dist folder
   npm run build
 
   # add the .shtml of 404
-   if [ -e ./dist/client/404.html ]; then
-    cp ./dist/client/404.html ./dist/client/404.shtml
+   if [ -e "$dist_client/404.html" ]; then
+    cp "$dist_client/404.html" "$dist_client/404.shtml"
   fi
 
   # restore .htaccess for NodeJs application
-  if [ -e ./backup/client/.htaccess ]; then
-    mv ./backup/client/.htaccess ./dist/client/
+  if [ -e "$backup_client/.htaccess" ]; then
+    mv "$backup_client/.htaccess" "$dist_client/"
   fi
 
   # restore the server logs
-  mkdir -p ./dist/server/logs
-  if [ -d ./backup/server/logs ]; then
-    if compgen -G "./backup/server/logs/*.log" > /dev/null; then
-      mv ./backup/server/logs/*.log ./dist/server/logs/
+  mkdir -p $dist_server_logs
+  if [ -d $backup_server_logs ]; then
+    if compgen -G "$backup_server_logs/*.log" > /dev/null; then
+      mv "$backup_server_logs/*.log" "$dist_server_logs/"
     fi
   fi
 
   # generate the node application entry point
-  if [ -d ./dist/server ]; then
-    echo "import(\"./entry.mjs\");" > ./dist/server/entry.cjs
+  if [ -d $dist_server ]; then
+    echo "import(\"./entry.mjs\");" > "$dist_server/entry.cjs"
   fi
 
 fi
