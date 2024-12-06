@@ -5,6 +5,7 @@
     "paths": {
       "@components": ["src/components/"],
       "@components/*": ["src/components/*"],
+      "@images/*": ["src/assets/images/*"],
       "@layouts/*": ["src/layouts/*"],
       "@libs/*": ["src/libs/*"],
       "@messages/*": ["src/paraglide/*"],
