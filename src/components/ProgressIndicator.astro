@@ -15,7 +15,7 @@ const { class: className, max, trackedId, thickness = "base" } = Astro.props;
   <hr
     id={`${trackedId}-count`}
     class:list={[
-      `invisible border-danger`,
+      "invisible",
       { "border-4": thickness === "lg" },
       { "border-2": thickness === "base" },
       { border: thickness === "sm" },
@@ -25,17 +25,33 @@ const { class: className, max, trackedId, thickness = "base" } = Astro.props;
 </astro-progress-indicator>
 
 <script>
+  import { amber, green, orange, red, yellow } from "tailwindcss/colors";
   import {
     HTMLComponentElementNotFoundError,
     HTMLComponentPropError,
   } from "@libs/errors";
 
   class AstroProgressIndicator extends HTMLElement {
+    #getColorState(progress: number): string {
+      const steps = {
+        [red[500]]: 25,
+        [orange[400]]: 50,
+        [amber[400]]: 75,
+        [yellow[300]]: 100,
+      };
+
+      for (const [color, step] of Object.entries(steps)) {
+        if (progress < step) {
+          return color;
+        }
+      }
+      return green[500];
+    }
+
     connectedCallback() {
       const { max, trackedId } = this.dataset;
 
       // Prop validation
-      // TODO: make a type guard for TS
       [
         ["max", max],
         ["trackedId", trackedId],
@@ -65,12 +81,15 @@ const { class: className, max, trackedId, thickness = "base" } = Astro.props;
             } else if (count == 0) {
               indicator.classList.add(cssClass);
             }
-            this.setAttribute("title", count.toString());
-            indicator.style.setProperty(
-              "width",
-              `${Math.min((count * 100) / +max!, 100)}%`,
-            );
           });
+
+          const progress = Math.floor((count * 100) / +max!);
+          const color = this.#getColorState(progress);
+
+          indicator.style.setProperty("width", `${Math.min(progress, 100)}%`);
+          indicator.style.setProperty("border-color", color);
+
+          this.setAttribute("title", count.toString());
         });
       }
     }
