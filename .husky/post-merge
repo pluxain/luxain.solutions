@@ -24,7 +24,7 @@ if [ $branch = "main" ]; then
 
   #  save the server logs
   if [ -d $dist_server_logs ]; then
-    if compgen -G "$dist_server_logs/*.log" > /dev/null; then
+    if ls $dist_server_logs/*.log >/dev/null 2>&1 ; then 
       mv $dist_server_logs/*.log $backup_server_logs/
     fi
   fi
@@ -45,7 +45,7 @@ if [ $branch = "main" ]; then
   # restore the server logs
   mkdir -p $dist_server_logs
   if [ -d $backup_server_logs ]; then
-    if compgen -G "$backup_server_logs/*.log" > /dev/null; then
+    if ls $backup_server_logs/*.log >/dev/null 2>&1; then
       mv $backup_server_logs/*.log $dist_server_logs/
     fi
   fi
