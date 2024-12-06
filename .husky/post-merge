@@ -18,7 +18,9 @@ if [ "$branch" = "main" ]; then
 
   #  save the server logs
   if [ -d ./dist/server/logs ]; then
-    mv ./dist/server/logs/*.log ./backup/server/logs/
+    if compgen -G "./dist/server/logs/*.log" > /dev/null; then
+      mv ./dist/server/logs/*.log ./backup/server/logs/
+    fi
   fi
 
   # build the app
@@ -37,7 +39,9 @@ if [ "$branch" = "main" ]; then
   # restore the server logs
   mkdir -p ./dist/server/logs
   if [ -d ./backup/server/logs ]; then
-    mv ./backup/server/logs/*.log ./dist/server/logs/
+    if compgen -G "./backup/server/logs/*.log" > /dev/null; then
+      mv ./backup/server/logs/*.log ./dist/server/logs/
+    fi
   fi
 
   # generate the node application entry point
