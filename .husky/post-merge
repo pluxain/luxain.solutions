@@ -18,14 +18,14 @@ if [ $branch = "main" ]; then
   mkdir -p $backup_server_logs
 
   # save .htaccess for NodeJs application
-  if [ -f "$dist_client/.htaccess" ]; then
-    mv "$dist_client/.htaccess" "$backup_client/"
+  if [ -f $dist_client/.htaccess ]; then
+    mv $dist_client/.htaccess $backup_client/
   fi
 
   #  save the server logs
   if [ -d $dist_server_logs ]; then
     if compgen -G "$dist_server_logs/*.log" > /dev/null; then
-      mv "$dist_server_logs/*.log" "$backup_server_logs/"
+      mv $dist_server_logs/*.log $backup_server_logs/
     fi
   fi
 
@@ -33,20 +33,20 @@ if [ $branch = "main" ]; then
   npm run build
 
   # add the .shtml of 404
-   if [ -f "$dist_client/404.html" ]; then
-    cp "$dist_client/404.html" "$dist_client/404.shtml"
+   if [ -f $dist_client/404.html ]; then
+    cp $dist_client/404.html $dist_client/404.shtml
   fi
 
   # restore .htaccess for NodeJs application
-  if [ -f "$backup_client/.htaccess" ]; then
-    mv "$backup_client/.htaccess" "$dist_client/"
+  if [ -f $backup_client/.htaccess ]; then
+    mv $backup_client/.htaccess $dist_client/
   fi
 
   # restore the server logs
   mkdir -p $dist_server_logs
   if [ -d $backup_server_logs ]; then
     if compgen -G "$backup_server_logs/*.log" > /dev/null; then
-      mv "$backup_server_logs/*.log" "$dist_server_logs/"
+      mv $backup_server_logs/*.log $dist_server_logs/
     fi
   fi
 
