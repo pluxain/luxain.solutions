@@ -18,7 +18,7 @@ if [ $branch = "main" ]; then
   mkdir -p $backup_server_logs
 
   # save .htaccess for NodeJs application
-  if [ -e "$dist_client/.htaccess" ]; then
+  if [ -f "$dist_client/.htaccess" ]; then
     mv "$dist_client/.htaccess" "$backup_client/"
   fi
 
@@ -33,12 +33,12 @@ if [ $branch = "main" ]; then
   npm run build
 
   # add the .shtml of 404
-   if [ -e "$dist_client/404.html" ]; then
+   if [ -f "$dist_client/404.html" ]; then
     cp "$dist_client/404.html" "$dist_client/404.shtml"
   fi
 
   # restore .htaccess for NodeJs application
-  if [ -e "$backup_client/.htaccess" ]; then
+  if [ -f "$backup_client/.htaccess" ]; then
     mv "$backup_client/.htaccess" "$dist_client/"
   fi
 
