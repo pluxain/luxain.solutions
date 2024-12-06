@@ -4,6 +4,7 @@ import LanguageSwitcher from "./LanguageSwitcher.astro";
 import LanguageTag from "./LanguageTag.astro";
 import Link from "./Link.astro";
 import Notification from "./Notification.astro";
+import ProgressIndicator from "./ProgressIndicator.astro";
 import VisualIndicator from "./VisualIndicator.astro";
 
 export {
@@ -13,5 +14,6 @@ export {
   LanguageTag,
   Link,
   Notification,
+  ProgressIndicator,
   VisualIndicator,
 };
