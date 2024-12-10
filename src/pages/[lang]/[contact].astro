@@ -117,7 +117,15 @@ export const getStaticPaths = (async () => {
           </p>
         </div>
       </fieldset>
-      <fieldset class="flex flex-row justify-end">
+      <fieldset class="flex flex-col justify-end gap-2 sm:flex-row">
+        <button
+          type="reset"
+          class="flex grow items-center justify-center bg-secondary px-4 py-2 text-secondary-solid disabled:bg-secondary-accent"
+        >
+          <span class="text">
+            {m.contact_form_reset()}
+          </span>
+        </button>
         <button
           type="submit"
           disabled
