@@ -1,5 +1,17 @@
-const formSubmitEvent = new Event("form.submit");
+const formResetEventKey = "form.reset";
+const formResetEvent = new Event(formResetEventKey);
 
-const formSubmitFailedEvent = new Event("form.submit.failed");
+const formSubmitEventKey = "form.submit";
+const formSubmitEvent = new Event(formSubmitEventKey);
 
-export { formSubmitEvent, formSubmitFailedEvent };
+const formSubmitFailedEventKey = "form.submit.failed";
+const formSubmitFailedEvent = new Event(formSubmitFailedEventKey);
+
+export {
+  formResetEvent,
+  formResetEventKey,
+  formSubmitEvent,
+  formSubmitEventKey,
+  formSubmitFailedEvent,
+  formSubmitFailedEventKey,
+};

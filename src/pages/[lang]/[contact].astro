@@ -117,7 +117,15 @@ export const getStaticPaths = (async () => {
           </p>
         </div>
       </fieldset>
-      <fieldset class="flex flex-row justify-end">
+      <fieldset class="flex flex-col justify-end gap-2 sm:flex-row">
+        <button
+          type="reset"
+          class="bg-secondary text-secondary-solid disabled:bg-secondary-accent flex grow items-center justify-center px-4 py-2"
+        >
+          <span class="text">
+            {m.contact_form_reset()}
+          </span>
+        </button>
         <button
           type="submit"
           disabled
@@ -148,7 +156,14 @@ export const getStaticPaths = (async () => {
 <script>
   import { actions, isInputError } from "astro:actions";
   import { navigate } from "astro:transitions/client";
-  import { formSubmitEvent, formSubmitFailedEvent } from "@libs/events";
+  import {
+    formResetEvent,
+    formResetEventKey,
+    formSubmitEvent,
+    formSubmitEventKey,
+    formSubmitFailedEvent,
+    formSubmitFailedEventKey,
+  } from "@libs/events";
 
   const form = document.querySelector(".contact-form");
 
@@ -166,19 +181,56 @@ export const getStaticPaths = (async () => {
       throw new Error("You must provide a submit button");
     }
 
+    const inputValidationCssClasses = [
+      "peer",
+      "valid:border-success",
+      "invalid:border-danger",
+    ];
     const disableSubmit = () => submit.setAttribute("disabled", "");
     const enableSubmit = () => submit.removeAttribute("disabled");
+    const activateValidation = (el: HTMLInputElement | HTMLTextAreaElement) => {
+      inputValidationCssClasses.forEach((cssClass) => {
+        if (!el.classList.contains(cssClass)) {
+          el.classList.add(cssClass);
+        }
+      });
+    };
 
-    submit.addEventListener("form.submit", () => {
+    const deactivateValidation = (
+      el: HTMLInputElement | HTMLTextAreaElement,
+    ) => {
+      inputValidationCssClasses.forEach((cssClass) => {
+        if (el.classList.contains(cssClass)) {
+          el.classList.remove(cssClass);
+        }
+      });
+    };
+
+    // We want to keep a ref on inputs to avoid traversing the DOM everytime
+    const inputs = form.querySelectorAll<
+      HTMLInputElement | HTMLTextAreaElement
+    >("[name][id]");
+
+    inputs.forEach((input) => {
+      input.addEventListener(formResetEventKey, () => {
+        deactivateValidation(input);
+      });
+    });
+
+    submit.addEventListener(formSubmitEventKey, () => {
       disableSubmit();
       submit.querySelector(".text")?.classList.add("hidden");
       submit.querySelector(".visual-indicator")?.classList.remove("hidden");
     });
 
-    submit.addEventListener("form.submit.failed", () => {
+    submit.addEventListener(formSubmitFailedEventKey, () => {
       submit.querySelector(".text")?.classList.remove("hidden");
       submit.querySelector(".visual-indicator")?.classList.add("hidden");
       enableSubmit();
+    });
+
+    submit.addEventListener(formResetEventKey, () => {
+      disableSubmit();
     });
 
     form.addEventListener("input", (e) => {
@@ -188,13 +240,7 @@ export const getStaticPaths = (async () => {
       ) {
         const { target: el } = e;
         // Note: we activate the error display mechanism on element only after at least one input.
-        ["peer", "valid:border-success", "invalid:border-danger"].forEach(
-          (cssClass) => {
-            if (!el.classList.contains(cssClass)) {
-              el.classList.add(cssClass);
-            }
-          },
-        );
+        activateValidation(el);
 
         if (!el.validity.valid) {
           el.setCustomValidity("");
@@ -246,6 +292,13 @@ export const getStaticPaths = (async () => {
       }
 
       navigate(to);
+    });
+
+    form.addEventListener("reset", () => {
+      inputs.forEach((input) => {
+        input.dispatchEvent(formResetEvent);
+      });
+      submit.dispatchEvent(formResetEvent);
     });
   }
 </script>
