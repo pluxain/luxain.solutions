@@ -13,9 +13,9 @@ const { class: className, max, trackedId, thickness = "base" } = Astro.props;
 
 <astro-progress-indicator data-tracked-id={trackedId} data-max={max}>
   <hr
-    id={`${trackedId}-count`}
+    id={`${trackedId}-progress-indicator`}
     class:list={[
-      "invisible",
+      "border-transparent",
       { "border-4": thickness === "lg" },
       { "border-2": thickness === "base" },
       { border: thickness === "sm" },
@@ -34,6 +34,7 @@ const { class: className, max, trackedId, thickness = "base" } = Astro.props;
   class AstroProgressIndicator extends HTMLElement {
     #getColorState(progress: number): string {
       const steps = {
+        transparent: 1,
         [red[500]]: 25,
         [orange[400]]: 50,
         [amber[400]]: 75,
@@ -64,25 +65,17 @@ const { class: className, max, trackedId, thickness = "base" } = Astro.props;
       const tracked = document.getElementById(trackedId!);
       if (tracked instanceof HTMLTextAreaElement) {
         const indicator = this.querySelector<HTMLHRElement>(
-          `#${trackedId}-count`,
+          `#${trackedId}-progress-indicator`,
         );
 
         if (indicator === null) {
           throw new HTMLComponentElementNotFoundError(
-            `HTMLElement with id ${trackedId}-count is required`,
+            `HTMLElement with id ${trackedId}-progress-indicator is required`,
           );
         }
 
         tracked.addEventListener("input", () => {
           const count = tracked.textLength;
-          ["invisible"].forEach((cssClass) => {
-            if (indicator.classList.contains(cssClass)) {
-              indicator.classList.remove(cssClass);
-            } else if (count == 0) {
-              indicator.classList.add(cssClass);
-            }
-          });
-
           const progress = Math.floor((count * 100) / +max!);
           const color = this.#getColorState(progress);
 

@@ -29,6 +29,7 @@ export default {
         DEFAULT: colors.green[500],
         solid: colors.green[50],
       },
+      transparent: "transparent",
       warning: {
         accent: colors.orange[300],
         DEFAULT: colors.orange[500],
