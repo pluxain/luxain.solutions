@@ -6,7 +6,6 @@ interface ImportMetaEnv {
   readonly EMAIL_HOST: string;
   readonly EMAIL_PASSWORD: string;
   readonly EMAIL_PORT: number;
-  readonly LOG_LEVEL: "debug" | "error" | "fatal" | "info" | "trace" | "warn";
 }
 
 interface ImportMeta {
