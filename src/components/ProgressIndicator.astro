@@ -30,6 +30,7 @@ const { class: className, max, trackedId, thickness = "base" } = Astro.props;
     HTMLComponentElementNotFoundError,
     HTMLComponentPropError,
   } from "@libs/errors";
+  import { formResetEventKey } from "@libs/events";
 
   class AstroProgressIndicator extends HTMLElement {
     #getColorState(progress: number): string {
@@ -83,6 +84,10 @@ const { class: className, max, trackedId, thickness = "base" } = Astro.props;
           indicator.style.setProperty("border-color", color);
 
           this.setAttribute("title", count.toString());
+        });
+
+        tracked.addEventListener(formResetEventKey, () => {
+          indicator.style.setProperty("border-color", "transparent");
         });
       }
     }
