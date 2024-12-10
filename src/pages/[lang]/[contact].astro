@@ -158,8 +158,11 @@ export const getStaticPaths = (async () => {
   import { navigate } from "astro:transitions/client";
   import {
     formResetEvent,
+    formResetEventKey,
     formSubmitEvent,
+    formSubmitEventKey,
     formSubmitFailedEvent,
+    formSubmitFailedEventKey,
   } from "@libs/events";
 
   const form = document.querySelector(".contact-form");
@@ -209,24 +212,24 @@ export const getStaticPaths = (async () => {
     >("[name][id]");
 
     inputs.forEach((input) => {
-      input.addEventListener("form.reset", () => {
+      input.addEventListener(formResetEventKey, () => {
         deactivateValidation(input);
       });
     });
 
-    submit.addEventListener("form.submit", () => {
+    submit.addEventListener(formSubmitEventKey, () => {
       disableSubmit();
       submit.querySelector(".text")?.classList.add("hidden");
       submit.querySelector(".visual-indicator")?.classList.remove("hidden");
     });
 
-    submit.addEventListener("form.submit.failed", () => {
+    submit.addEventListener(formSubmitFailedEventKey, () => {
       submit.querySelector(".text")?.classList.remove("hidden");
       submit.querySelector(".visual-indicator")?.classList.add("hidden");
       enableSubmit();
     });
 
-    submit.addEventListener("form.reset", () => {
+    submit.addEventListener(formResetEventKey, () => {
       disableSubmit();
     });
 
