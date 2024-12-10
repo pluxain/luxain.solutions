@@ -19,6 +19,11 @@ export default {
         DEFAULT: colors.blue[500],
         solid: colors.blue[50],
       },
+      secondary: {
+        accent: colors.gray[300],
+        DEFAULT: colors.gray[500],
+        solid: colors.gray[50],
+      },
       success: {
         accent: colors.green[300],
         DEFAULT: colors.green[500],
