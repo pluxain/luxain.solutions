@@ -120,7 +120,7 @@ export const getStaticPaths = (async () => {
       <fieldset class="flex flex-col justify-end gap-2 sm:flex-row">
         <button
           type="reset"
-          class="bg-secondary text-secondary-solid disabled:bg-secondary-accent flex grow items-center justify-center px-4 py-2"
+          class="flex grow items-center justify-center bg-secondary px-4 py-2 text-secondary-solid disabled:bg-secondary-accent"
         >
           <span class="text">
             {m.contact_form_reset()}
@@ -207,9 +207,11 @@ export const getStaticPaths = (async () => {
     };
 
     // We want to keep a ref on inputs to avoid traversing the DOM everytime
-    const inputs = form.querySelectorAll<
-      HTMLInputElement | HTMLTextAreaElement
-    >("[name][id]");
+    const inputs = Array.from(
+      form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>(
+        "[name][id]",
+      ),
+    );
 
     inputs.forEach((input) => {
       input.addEventListener(formResetEventKey, () => {
@@ -271,10 +273,14 @@ export const getStaticPaths = (async () => {
       const formData = new FormData(form);
       const { error } = await actions.mail.send(formData);
       if (error) {
+        submit.dispatchEvent(formSubmitFailedEvent);
         if (isInputError(error)) {
           const errors = Object.entries(error.fields);
           errors.forEach(([id, messages]) => {
-            const input = form.querySelector(`#${id}`);
+            const input = inputs.find(
+              (input) => input.getAttribute("id") === id,
+            );
+
             if (
               input instanceof HTMLInputElement ||
               input instanceof HTMLTextAreaElement
@@ -286,7 +292,6 @@ export const getStaticPaths = (async () => {
           if (errorNotification) {
             errorNotification.classList.remove("invisible");
           }
-          submit.dispatchEvent(formSubmitFailedEvent);
         }
         return;
       }

@@ -9,8 +9,8 @@ export const mail = {
     accept: "form",
     input: z.object({
       from: z.string().email(),
-      message: z.string(),
-      subject: z.string(),
+      message: z.string().min(50),
+      subject: z.string().min(5),
     }),
     handler: async (input) => {
       try {
