@@ -8,6 +8,7 @@ type SendMailOptions = {
 };
 
 export const sendMail = async ({ from, message, subject }: SendMailOptions) => {
+  // Note: we do not use the astro:env as it does not enable error handling like here
   const { EMAIL_ACCOUNT, EMAIL_HOST, EMAIL_PASSWORD, EMAIL_PORT } = import.meta
     .env;
 

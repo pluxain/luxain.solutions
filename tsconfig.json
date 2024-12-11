@@ -12,5 +12,7 @@
       "@types": ["src/types/"],
       "@types/*": ["src/types/*"]
     }
-  }
+  },
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
 }
