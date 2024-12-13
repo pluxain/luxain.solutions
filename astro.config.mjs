@@ -9,6 +9,7 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
+
   env: {
     schema: {
       LOG_LEVEL: envField.enum({
@@ -20,6 +21,11 @@ export default defineConfig({
       }),
     },
   },
+
+  experimental: {
+    svg: true,
+  },
+
   i18n: {
     defaultLocale: "en",
     locales: ["de", "en", "fr", "it"],
@@ -29,6 +35,7 @@ export default defineConfig({
       redirectToDefaultLocale: false,
     },
   },
+
   integrations: [
     paraglide({
       project: "./project.inlang",
@@ -36,6 +43,8 @@ export default defineConfig({
     }),
     tailwind(),
   ],
+
   output: "static",
+
   site: "https://luxain.solutions",
 });
