@@ -11,7 +11,7 @@ backup_server_logs="$backup_server/logs"
 if [ $branch = "main" ]; then
   echo "$branch branch executing install and build"
   # TODO: Find a way to only run when package-lock.json is modified
-  npm install
+  npm ci --cache ~/.npm --prefer-online --no-audit
 
   # create folder structure for backup
   mkdir -p $backup_client

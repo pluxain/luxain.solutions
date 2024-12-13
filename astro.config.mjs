@@ -9,6 +9,7 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
+
   env: {
     schema: {
       LOG_LEVEL: envField.enum({
@@ -20,6 +21,11 @@ export default defineConfig({
       }),
     },
   },
+
+  experimental: {
+    svg: true,
+  },
+
   i18n: {
     defaultLocale: "en",
     locales: ["de", "en", "fr", "it"],
@@ -29,13 +35,24 @@ export default defineConfig({
       redirectToDefaultLocale: false,
     },
   },
+
   integrations: [
     paraglide({
       project: "./project.inlang",
       outdir: "./src/paraglide",
     }),
-    tailwind(),
+    tailwind({
+      // Example: Disable injecting a basic `base.css` import on every page.
+      // Useful if you need to define and/or import your own custom `base.css`.
+      applyBaseStyles: false,
+
+      // Example: Allow writing nested CSS declarations
+      // alongside Tailwind's syntax
+      nesting: true,
+    }),
   ],
+
   output: "static",
+
   site: "https://luxain.solutions",
 });
