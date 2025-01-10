@@ -1,51 +1,28 @@
 ---
 import type { GetStaticPaths } from "astro";
-import { Link } from "@components";
 import BaseLayout from "@layouts/BaseLayout.astro";
 import * as m from "@messages/messages";
 import { availableLanguageTags } from "@messages/runtime";
 
 const description = `Pascal Luxain, ${m.what_am_i()} ${m.aye_captain().toLocaleLowerCase()} ${m.what_can_i_do_for_you()}`;
 
-const services = [
-  m.software_development(),
-  m.project_management(),
-  m.counseling(),
-];
-
 export const getStaticPaths = (async () => {
   return availableLanguageTags.map((lang) => ({
     params: { lang },
   }));
 }) satisfies GetStaticPaths;
-
-const { currentLocale } = Astro;
 ---
 
 <BaseLayout description={description} pageTitle="Luxain Solutions, e.U.">
-  <section
-    class="flex w-full grow flex-col justify-center text-center md:m-auto md:w-96"
-  >
+  <section class="flex grow flex-col justify-center text-center md:mx-12">
     <h1 class="py-6 text-lg font-bold [font-variant-caps:small-caps]">
       Luxain Solutions, e.U.
     </h1>
     <h2 class="text-lg">Pascal Luxain</h2>
     <h3>-- {m.what_am_i()}</h3>
     <blockquote class="py-2 text-lg italic">{m.aye_captain()}</blockquote>
-    <ul class="flex w-full flex-col gap-2 py-4 font-bold">
-      {
-        services.map((service) => (
-          <li class="text-center odd:bg-primary-solid odd:text-primary even:bg-primary even:text-primary-solid hover:bg-success-solid hover:text-success">
-            <Link
-              href={`/${currentLocale}/${m.contact_slug()}?subject=${service.replace(" ", "+")}`}
-              hreflang={currentLocale}
-              class="block p-4"
-            >
-              {service}
-            </Link>
-          </li>
-        ))
-      }
-    </ul>
+    <div class="text-justify">
+      <p>{m.purpose()}.</p>
+    </div>
   </section>
 </BaseLayout>
