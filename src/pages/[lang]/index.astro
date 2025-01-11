@@ -1,6 +1,7 @@
 ---
 import type { GetStaticPaths } from "astro";
 import BaseLayout from "@layouts/BaseLayout.astro";
+import { Link } from "@components";
 import * as m from "@messages/messages";
 import { availableLanguageTags } from "@messages/runtime";
 
@@ -11,6 +12,8 @@ export const getStaticPaths = (async () => {
     params: { lang },
   }));
 }) satisfies GetStaticPaths;
+
+const { currentLocale } = Astro;
 ---
 
 <BaseLayout description={description} pageTitle="Luxain Solutions, e.U.">
@@ -21,8 +24,16 @@ export const getStaticPaths = (async () => {
     <h2 class="text-lg">Pascal Luxain</h2>
     <h3>-- {m.what_am_i()}</h3>
     <blockquote class="py-2 text-lg italic">{m.aye_captain()}</blockquote>
-    <div class="text-justify">
+    <div class="flex flex-col gap-4 text-justify">
       <p>{m.purpose()}.</p>
+      <p>
+        {m.lcnmqt()}
+        <Link
+          href="https://www.lechainonmanquant.studio"
+          rel="external"
+          hreflang={currentLocale}>lechainonmanquant.studio</Link
+        >.
+      </p>
     </div>
   </section>
 </BaseLayout>
