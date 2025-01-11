@@ -1,7 +1,7 @@
 {
   "name": "luxain-solutions",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
@@ -17,10 +17,7 @@
     "@astrojs/node": "^9.0.0",
     "@astrojs/tailwind": "^5.1.3",
     "@inlang/paraglide-astro": "^0.2.6",
-    "@types/nodemailer": "^6.4.16",
     "astro": "^5.0.4",
-    "nodemailer": "^6.9.15",
-    "pino": "^9.5.0",
     "tailwindcss": "^3.4.14"
   },
   "devDependencies": {
