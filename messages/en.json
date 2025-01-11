@@ -1,7 +1,9 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "aye_captain": "At your Service!",
+  "company": "Luxain Solutions, e.U. is a registered company ({fn}) with a valid intra-community VAT number ({uid}), with registered office at: {address}  Vienna, Austria",
   "contact_description": "Get in touch with me with questions you have and I will answer you as soon as possible",
+  "contact_details": "Naturally, you can contact me at any time by email or by phone at",
   "contact_error_oh_nooo": "Oh no! An error occured while sending the email...",
   "contact_error_try_later": "Please try again later, thank you!",
   "contact_form_label_from": "Your email",

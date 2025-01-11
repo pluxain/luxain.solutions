@@ -1,7 +1,9 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "aye_captain": "À votre service !",
+  "company": "Luxain Solutions, e.U. est une entreprise déclarée ({fn}) possédant un numéro de TVA intracommunautaire valide ({uid}), dont le siège social se situe à: {address} Vienne, Autriche.",
   "contact_description": "Adressez-moi vos questions et je vous répondrai dans les meilleurs délais",
+  "contact_details": "Naturellement, vous pouvez me contacter à tout moment par courriel ou par téléphone à",
   "contact_error_oh_nooo": "Oh non! Une erreur est survenue lors de l'envoi de l'email...",
   "contact_error_try_later": "Merci de réessayer plus tard!",
   "contact_form_label_from": "Votre email",

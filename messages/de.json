@@ -1,7 +1,9 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "aye_captain": "Stets zu Diensten!",
+  "company": "Luxain Solutions, e.U. ist ein eingetragenes Unternehmen ({fn}) mit gültiger innergemeinschaftlicher Umsatzsteuer-Identifikationsnummer ({uid}), mit Sitz in: {address} Wien, Österreich.",
   "contact_description": "Ich freue mich auf deine Nachricht und melde mich so schnell wie möglich bei dir",
+  "contact_details": "Selbstverständlich können Sie mich jederzeit per E-Mail oder per Telefon kontaktieren an",
   "contact_error_oh_nooo": "Oh nein! irgendetwas hat leider nicht geklappt...",
   "contact_error_try_later": "Bitte probiere es später noch einmal, danke!",
   "contact_form_label_from": "Deine E-Mail",

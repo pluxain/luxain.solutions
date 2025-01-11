@@ -17,7 +17,7 @@ const { currentLocale } = Astro;
 ---
 
 <BaseLayout description={description} pageTitle="Luxain Solutions, e.U.">
-  <section class="flex grow flex-col justify-center text-center md:mx-12">
+  <section class="mb-8 flex grow flex-col justify-center text-center md:mx-12">
     <h1 class="py-6 text-lg font-bold [font-variant-caps:small-caps]">
       Luxain Solutions, e.U.
     </h1>
@@ -33,6 +33,22 @@ const { currentLocale } = Astro;
           rel="external"
           hreflang={currentLocale}>lechainonmanquant.studio</Link
         >.
+      </p>
+      <p>
+        {m.contact_details()}
+        <Link href="mailto:pascal@luxain.solutions"
+          >pascal@luxain.solutions</Link
+        >,
+        <Link href="tel:+4366303110394">+43 663 0311 0394</Link>.
+      </p>
+      <p>
+        {
+          m.company({
+            fn: "634570 t",
+            uid: "ATU81100915",
+            address: "Hannovergasse 16/23, 1200",
+          })
+        }
       </p>
     </div>
   </section>
