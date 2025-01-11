@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, envField } from "astro/config";
+import { defineConfig } from "astro/config";
 import paraglide from "@inlang/paraglide-astro";
 import tailwind from "@astrojs/tailwind";
 import node from "@astrojs/node";
@@ -9,18 +9,6 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
-
-  env: {
-    schema: {
-      LOG_LEVEL: envField.enum({
-        context: "client",
-        access: "public",
-        default: "trace",
-        optional: true,
-        values: ["debug", "error", "fatal", "info", "trace", "warn"],
-      }),
-    },
-  },
 
   experimental: {
     svg: true,
