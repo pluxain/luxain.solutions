@@ -1,8 +1,8 @@
 // @ts-check
-import { defineConfig } from "astro/config";
-import paraglide from "@inlang/paraglide-astro";
-import tailwind from "@astrojs/tailwind";
 import node from "@astrojs/node";
+import tailwind from "@astrojs/tailwind";
+import paraglide from "@inlang/paraglide-astro";
+import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
